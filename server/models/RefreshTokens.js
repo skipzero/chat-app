@@ -1,7 +1,7 @@
-const mongoose5 = require("mongoose");
+const mongoose = require("mongoose");
 
-const RefreshTokenSchema = new mongoose5.Schema({
-  user: { type: mongoose5.Schema.Types.ObjectId, ref: "User", required: true },
+const RefreshTokenSchema = new mongoose.Schema({
+  user: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
   tokenHash: { type: String, required: true }, // hash of the raw token
   createdAt: { type: Date, default: Date.now },
   expiresAt: { type: Date, required: true },
@@ -11,4 +11,4 @@ const RefreshTokenSchema = new mongoose5.Schema({
   userAgent: { type: String },
 });
 
-module.exports = mongoose5.model("RefreshToken", RefreshTokenSchema);
+module.exports = mongoose.model("RefreshToken", RefreshTokenSchema);
