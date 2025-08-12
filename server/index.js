@@ -44,7 +44,7 @@ app.get('/rooms', authMiddleware, async (req, res) => {
   }catch(err){ console.error(err); res.status(500).json({ error: 'Could not list rooms' }); }
 });
 
-app2.post('/rooms/:roomId/invite', authMiddleware2, async (req, res) => {
+app.post('/rooms/:roomId/invite', authMiddleware, async (req, res) => {
   const { roomId } = req.params;
   const { userId } = req.body;
   try{
@@ -59,7 +59,7 @@ app2.post('/rooms/:roomId/invite', authMiddleware2, async (req, res) => {
 });
 
 // Protected messages endpoint
-app2.get('/rooms/:roomId/messages', authMiddleware, async (req, res) => {
+app.get('/rooms/:roomId/messages', authMiddleware, async (req, res) => {
   const { roomId } = req.params;
   const limit = Math.min(parseInt(req.query.limit || '50', 10), 200);
   const before = req.query.before ? new Date(req.query.before) : null;
