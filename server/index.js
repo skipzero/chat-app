@@ -1,7 +1,7 @@
 const express = require('express');
 const http = require('http');
 const { Server } = require('socket.io');
-const mongoose4 = require('mongoose');
+const mongoose = require('mongoose');
 const cors = require('cors');
 const Message = require('./models/Message');
 const Room = require('./models/Room');
@@ -21,9 +21,9 @@ const io = new Server(server, { cors: { origin: '*' } });
 
 const PORT = process.env.PORT || 4000;
 const MONGO_URI = process.env.MONGO_URI || 'mongodb://localhost:27017/chatapp';
-const JWT_SECRET = process.env.JWT_SECRET || 'replace_this_with_strong_secret';
+const JWT_SECRET = process.env.JWT_SECRET || 'DEMO_SECRET';
 
-mongoose4.connect(MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
+mongoose.connect(MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => console.log('Mongo connected'))
   .catch(err => console.error('Mongo connection error', err));
 
@@ -113,8 +113,8 @@ io.on('connection', (socket) => {
     participantsMap[roomId].add(socket.id);
 
     const participants = Array.from(participantsMap[roomId]).map(id => {
-      const sock = io.sockets.sockets.get(id);
-      return sock ? { socketId: id, userId: sock.data.userId, userName: sock.data.username } : null;
+      const s = io.sockets.sockets.get(id);
+      return s ? { socketId: id, userId: s.data.userId, userName: s.data.username } : null;
     }).filter(Boolean);
 
     io.to(roomId).emit('room_participants', participants);
@@ -134,16 +134,16 @@ io.on('connection', (socket) => {
 
   socket.on('send_message', async ({ roomId, text }) => {
     if (!roomId || !socket.data.userId || !text) return;
-    const mess = new Message({ roomId, senderId: socket.data.userId, senderName: socket.data.username, text });
+    const message = new Message({ roomId, senderId: socket.data.userId, senderName: socket.data.username, text });
     try {
-      await mess.save();
+      await message.save();
       io.to(roomId).emit('new_message', {
-        _id: mess._id,
-        roomId: mess.roomId,
-        senderId: mess.senderId,
-        senderName: mess.senderName,
-        text: mess.text,
-        createdAt: mess.createdAt
+        _id: message._id,
+        roomId: message.roomId,
+        senderId: message.senderId,
+        senderName: message.senderName,
+        text: message.text,
+        createdAt: message.createdAt
       });
     } catch (err) { console.error('save error', err); }
   });
@@ -160,7 +160,7 @@ io.on('connection', (socket) => {
     if (roomId && participantsMap[roomId]) {
       participantsMap[roomId].delete(socket.id);
       const participants = Array.from(participantsMap[roomId]).map(id => {
-        const sock = io2.sockets.sockets.get(id);
+        const sock = io.sockets.sockets.get(id);
         return sock ? { socketId: id, userId: sock.data.userId, userName: sock.data.username } : null;
       }).filter(Boolean);
       io.to(roomId).emit('room_participants', participants);
