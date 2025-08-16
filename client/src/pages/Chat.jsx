@@ -78,7 +78,11 @@ export default function Chat({ user, onLogout }) {
     (async () => {
       try {
         const res = await axios.get(
-          `${SERVER}/rooms/${activeRoom}/messages?limit=100`
+          `${SERVER}/rooms/${activeRoom}/messages?limit=100`, {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem('token')}`
+            }
+          }
         );
         setMessages(res.data || []);
       } catch (err) {

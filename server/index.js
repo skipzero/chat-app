@@ -91,6 +91,7 @@ io.use((socket, next) => {
   try{
     const token = socket.handshake.auth?.token?.split(' ')[1];
     if (!token) return next(new Error('Authentication error'));
+    console.log('index auth', token, JWT_SECRET);
     const payload = require('jsonwebtoken').verify(token, JWT_SECRET);
     socket.data.userId = payload.userId;
     socket.data.username = payload.username;
