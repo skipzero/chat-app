@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import z from "zod";
 
 const { Schema, model } = mongoose;
 
@@ -68,41 +69,9 @@ const verificationSchema = new Schema(
 	{ collection: "verification" },
 );
 
-const roomSchema = new Schema(
-	{
-		_id: { type: String },
-		identifier: { type: String, required: true },
-		name: { type: String, required: true },
-		members: [{ type: String, ref: "User" }],
-		createdBy: { type: String, ref: "User", required: true },
-		createdAt: { type: Date, required: true },
-	},
-	{ collection: "room" },
-);
-																																																																																															
-	roomSchema.index({ name: 1, identifier: 1 }); // For quick lookup by identifier
-
-const messageSchema = new Schema(
-	{
-		_id: { type: String },
-		roomId: { type: String, ref: "Room", required: true },
-		senderId: { type: String, ref: "User", required: true },
-		seenBy: [{ type: String, ref: "User" }],
-		private: { type: Boolean, required: true, default: false },
-		content: { type: String, required: true },
-		createdAt: { type: Date, required: true },
-	},
-	{ collection: "message" },
-);
-
-messageSchema.index({ roomId: 1, createdAt: -1 }); // For fetching messages in a room ordered by creation time
-messageSchema.index({ senderId: 1, roomId: 1 }); // For fetching messages by a specific sender in a room
-
 const User = model("User", userSchema);
 const Session = model("Session", sessionSchema);
 const Account = model("Account", accountSchema);
 const Verification = model("Verification", verificationSchema);
-const Room = model("Room", roomSchema);
-const Message = model("Message", messageSchema);
 
-export { User, Session, Account, Verification, Room, Message };
+export { User, Session, Account, Verification};
