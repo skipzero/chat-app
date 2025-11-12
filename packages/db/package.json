@@ -21,8 +21,8 @@
     "typescript": "^5"
   },
   "dependencies": {
-    "mongoose": "^8.14.0",
     "dotenv": "catalog:",
+    "mongoose": "^8.19.3",
     "zod": "catalog:"
   }
 }
