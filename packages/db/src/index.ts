@@ -1,9 +1,11 @@
 import mongoose from "mongoose";
 
-await mongoose.connect(process.env.DATABASE_URL || "").catch((error) => {
+const {DATABASE_URL, DB_NAME} = process.env;
+
+await mongoose.connect(DATABASE_URL || "").catch((error) => {
 	console.log("Error connecting to database:", error);
 });
 
-const client = mongoose.connection.getClient().db("next-chat");
+const client = mongoose.connection.getClient().db(DB_NAME)	;
 
 export { client };

@@ -1,6 +1,5 @@
 {
-  "name": "@tempChatApp/db",
-  "type": "module",
+  "name": "@tempChatApp/api",
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
@@ -11,6 +10,7 @@
       "default": "./src/*.ts"
     }
   },
+  "type": "module",
   "scripts": {
     "build": "tsdown"
   },
@@ -21,8 +21,15 @@
     "typescript": "^5"
   },
   "dependencies": {
+    "@orpc/server": "^1.10.0",
+    "@orpc/client": "^1.10.0",
+    "@orpc/openapi": "^1.10.0",
+    "@orpc/zod": "^1.10.0",
+    "next": "15.5.4",
     "mongoose": "^8.14.0",
     "dotenv": "^17.2.2",
-    "zod": "^4.1.11"
+    "zod": "^4.1.11",
+    "@tempChatApp/auth": "*",
+    "@tempChatApp/db": "*"
   }
 }
