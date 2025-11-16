@@ -15,8 +15,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-	title: "nextBetterMongoDB",
-	description: "nextBetterMongoDB",
+	title: "tempChatApp",
+	description: "tempChatApp",
 };
 
 export default function RootLayout({

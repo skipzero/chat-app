@@ -1,5 +1,5 @@
 {
-  "name": "nextBetterMongoDB",
+  "name": "tempChatApp",
   "private": true,
   "type": "module",
   "workspaces": [
@@ -7,6 +7,7 @@
     "packages/*"
   ],
   "scripts": {
+    "check": "oxlint",
     "dev": "turbo dev",
     "build": "turbo build",
     "check-types": "turbo check-types",
@@ -15,14 +16,13 @@
   },
   "dependencies": {
     "dotenv": "^17.2.2",
-    "mongoose": "^8.19.3",
-    "typescript": "5.9.3",
     "zod": "^4.1.11"
   },
   "devDependencies": {
-    "@types/node": "^22.13.11",
+    "turbo": "^2.5.4",
+    "oxlint": "^1.12.0",
     "tsdown": "^0.15.5",
-    "turbo": "^2.5.4"
+    "@types/node": "^22.13.11"
   },
-  "packageManager": "pnpm@10.20.0"
+  "packageManager": "npm@11.6.2"
 }

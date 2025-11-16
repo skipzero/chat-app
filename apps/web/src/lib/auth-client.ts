@@ -1,4 +1,4 @@
-import type { auth } from "@nextBetterMongoDB/auth";
+import type { auth } from "@tempChatApp/auth";
 import { createAuthClient } from "better-auth/react";
 import { inferAdditionalFields } from "better-auth/client/plugins";
 

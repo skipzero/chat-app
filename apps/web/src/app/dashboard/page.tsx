@@ -1,7 +1,7 @@
 import { redirect } from "next/navigation";
 import Dashboard from "./dashboard";
 import { headers } from "next/headers";
-import { auth } from "@nextBetterMongoDB/auth";
+import { auth } from "@tempChatApp/auth";
 import { authClient } from "@/lib/auth-client";
 
 export default async function DashboardPage() {
@@ -13,12 +13,10 @@ export default async function DashboardPage() {
 		redirect("/login");
 	}
 
-	const name = session.user.name || 'friend'
-
 	return (
 		<div>
 			<h1>Dashboard</h1>
-			<p>Welcome { name }</p>
+			<p>Welcome {session.user.name}</p>
 			<Dashboard session={session} />
 		</div>
 	);

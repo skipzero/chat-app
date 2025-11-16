@@ -20,14 +20,14 @@ export default function SignUpForm({
 		defaultValues: {
 			email: "",
 			password: "",
-			username: "",
+			name: "",
 		},
 		onSubmit: async ({ value }) => {
 			await authClient.signUp.email(
 				{
 					email: value.email,
 					password: value.password,
-					username: value.username,
+					name: value.name,
 				},
 				{
 					onSuccess: () => {
@@ -42,7 +42,7 @@ export default function SignUpForm({
 		},
 		validators: {
 			onSubmit: z.object({
-				username: z.string().min(2, "Name must be at least 2 characters"),
+				name: z.string().min(2, "Name must be at least 2 characters"),
 				email: z.email("Invalid email address"),
 				password: z.string().min(8, "Password must be at least 8 characters"),
 			}),
@@ -66,10 +66,10 @@ export default function SignUpForm({
 				className="space-y-4"
 			>
 				<div>
-					<form.Field name="username">
+					<form.Field name="name">
 						{(field) => (
 							<div className="space-y-2">
-								<Label htmlFor={field.name}>Username</Label>
+								<Label htmlFor={field.name}>Name</Label>
 								<Input
 									id={field.name}
 									name={field.name}
