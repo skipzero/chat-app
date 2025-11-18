@@ -1,5 +1,5 @@
 {
-  "name": "@tempChatApp/auth",
+  "name": "@chat-app/auth",
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
@@ -15,15 +15,16 @@
     "build": "tsdown"
   },
   "devDependencies": {
-    "tsdown": "^0.15.5"
+    "tsdown": "catalog:",
+    "@chat-app/config": "workspace:*"
   },
   "peerDependencies": {
     "typescript": "^5"
   },
   "dependencies": {
-    "better-auth": "^1.3.28",
-    "dotenv": "^17.2.2",
-    "zod": "^4.1.11",
-    "@tempChatApp/db": "*"
+    "better-auth": "catalog:",
+    "dotenv": "catalog:",
+    "zod": "catalog:",
+    "@chat-app/db": "workspace:*"
   }
 }

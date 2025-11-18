@@ -1,0 +1,29 @@
+// Better-T-Stack configuration file
+// safe to delete
+
+{
+  "$schema": "https://r2.better-t-stack.dev/schema.json",
+  "version": "3.4.2",
+  "createdAt": "2025-11-18T15:39:54.204Z",
+  "database": "mongodb",
+  "orm": "mongoose",
+  "backend": "self",
+  "runtime": "none",
+  "frontend": [
+    "next"
+  ],
+  "addons": [
+    "turborepo",
+    "oxlint"
+  ],
+  "examples": [
+    "todo",
+    "ai"
+  ],
+  "auth": "better-auth",
+  "packageManager": "pnpm",
+  "dbSetup": "mongodb-atlas",
+  "api": "orpc",
+  "webDeploy": "none",
+  "serverDeploy": "none"
+}
