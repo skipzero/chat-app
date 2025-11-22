@@ -1,7 +1,7 @@
 import { nextCookies } from 'better-auth/next-js';
 import { betterAuth, type BetterAuthOptions } from "better-auth";
 import { mongodbAdapter } from "better-auth/adapters/mongodb";
-import { client } from "@tempChatApp/db";
+import { client } from "@chat-app/db";
 
 export const auth = betterAuth<BetterAuthOptions>({
 	database: mongodbAdapter(client),

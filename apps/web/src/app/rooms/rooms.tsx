@@ -18,7 +18,7 @@ export function Rooms({
 	session: typeof authClient.$Infer.Session;
 }) {
 	const privateData = useQuery(orpc.privateData.queryOptions());
-	const todos = useQuery(orpc.rooms.getAll.queryOptions());
+	const rooms = useQuery(orpc.rooms.getAll.queryOptions());
 	
 	return (
 		<>

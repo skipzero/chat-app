@@ -1,6 +1,6 @@
 import z from "zod";
 import { publicProcedure } from "../index";
-import { Rooms } from "@tempChatApp/db/models/room.model";
+import { Rooms } from "@chat-app/db/models/room.model";
 
 export const roomsRouter = {
   getAll: publicProcedure.handler(async () => {

@@ -1,7 +1,7 @@
 import { redirect } from "next/navigation";
 import { Rooms } from "./rooms";
 import { headers } from "next/headers";
-import { auth } from "@tempChatApp/auth";
+import { auth } from "@chat-app/auth";
 
 export default async function ChatsPage() {
   const session = await auth.api.getSession({

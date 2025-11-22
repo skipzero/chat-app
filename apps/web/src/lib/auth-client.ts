@@ -1,4 +1,4 @@
-import type { auth } from "@tempChatApp/auth";
+import type { auth } from "@chat-app/auth";
 import { createAuthClient } from "better-auth/react";
 import { inferAdditionalFields } from "better-auth/client/plugins";
 
