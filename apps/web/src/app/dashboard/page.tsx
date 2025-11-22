@@ -1,7 +1,7 @@
 import { redirect } from "next/navigation";
 import Dashboard from "./dashboard";
 import { headers } from "next/headers";
-import { auth } from "@tempChatApp/auth";
+import { auth } from "@chat-app/auth";
 import { authClient } from "@/lib/auth-client";
 
 export default async function DashboardPage() {

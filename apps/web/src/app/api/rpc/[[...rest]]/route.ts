@@ -1,5 +1,5 @@
-import { createContext } from "@tempChatApp/api/context";
-import { appRouter } from "@tempChatApp/api/routers/index";
+import { createContext } from "@chat-app/api/context";
+import { appRouter } from "@chat-app/api/routers/index";
 import { OpenAPIHandler } from "@orpc/openapi/fetch";
 import { OpenAPIReferencePlugin } from "@orpc/openapi/plugins";
 import { ZodToJsonSchemaConverter } from "@orpc/zod/zod4";
