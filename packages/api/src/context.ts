@@ -1,13 +1,19 @@
-import type { NextRequest } from "next/server";
-import { auth } from "@chat-app/auth";
+import type { Request } from "express";
 
-export async function createContext(req: NextRequest) {
-	const session = await auth.api.getSession({
-		headers: req.headers,
-	});
-	return {
-		session,
-	};
+import { auth } from "@chat/auth";
+import { fromNodeHeaders } from "better-auth/node";
+
+interface CreateContextOptions {
+  req: Request;
+}
+
+export async function createContext(opts: CreateContextOptions) {
+  const session = await auth.api.getSession({
+    headers: fromNodeHeaders(opts.req.headers),
+  });
+  return {
+    session,
+  };
 }
 
 export type Context = Awaited<ReturnType<typeof createContext>>;

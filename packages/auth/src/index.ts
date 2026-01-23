@@ -1,13 +1,19 @@
-import { nextCookies } from 'better-auth/next-js';
-import { betterAuth, type BetterAuthOptions } from "better-auth";
+import { client } from "@chat/db";
+import { env } from "@chat/env/server";
+import { betterAuth } from "better-auth";
 import { mongodbAdapter } from "better-auth/adapters/mongodb";
-import { client } from "@chat-app/db";
 
-export const auth = betterAuth<BetterAuthOptions>({
-	database: mongodbAdapter(client),
-	trustedOrigins: [process.env.CORS_ORIGIN || ""],
-	emailAndPassword: {
-		enabled: true,
-	},
-  plugins: [nextCookies()]
+export const auth = betterAuth({
+  database: mongodbAdapter(client),
+  trustedOrigins: [env.CORS_ORIGIN],
+  emailAndPassword: {
+    enabled: true,
+  },
+  advanced: {
+    defaultCookieAttributes: {
+      sameSite: "none",
+      secure: true,
+      httpOnly: true,
+    },
+  },
 });
