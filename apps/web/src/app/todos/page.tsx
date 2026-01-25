@@ -3,6 +3,7 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { Loader2, Trash2 } from "lucide-react";
 import { useState } from "react";
+import { ObjectId } from "Types.ObjectId";
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -44,11 +45,11 @@ export default function TodosPage() {
     }
   };
 
-  const handleToggleTodo = (id: number, completed: boolean) => {
+  const handleToggleTodo = (id: string, completed: boolean) => {
     toggleMutation.mutate({ id, completed: !completed });
   };
 
-  const handleDeleteTodo = (id: number) => {
+  const handleDeleteTodo = (id: string) => {
     deleteMutation.mutate({ id });
   };
 
@@ -80,9 +81,9 @@ export default function TodosPage() {
             <p className="py-4 text-center">No todos yet. Add one above!</p>
           ) : (
             <ul className="space-y-2">
-              {todos.data?.map((todo) => (
+              {todos.data?.map((todo, index) => (
                 <li
-                  key={todo.id}
+                  key={index}
                   className="flex items-center justify-between rounded-md border p-2"
                 >
                   <div className="flex items-center space-x-2">
