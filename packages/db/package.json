@@ -1,5 +1,5 @@
 {
-  "name": "@chat/db",
+  "name": "@chat-app/db",
   "type": "module",
   "exports": {
     ".": {
@@ -11,13 +11,13 @@
   },
   "scripts": {},
   "dependencies": {
-    "@chat/env": "workspace:*",
+    "@chat-app/env": "workspace:*",
     "dotenv": "catalog:",
-    "mongoose": "catalog:",
+    "mongoose": "^8.14.0",
     "zod": "catalog:"
   },
   "devDependencies": {
-    "@chat/config": "workspace:*",
+    "@chat-app/config": "workspace:*",
     "typescript": "catalog:"
   }
 }

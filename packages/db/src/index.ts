@@ -1,4 +1,4 @@
-import { env } from "@chat/env/server";
+import { env } from "@chat-app/env/server";
 import mongoose from "mongoose";
 
 await mongoose.connect(env.DATABASE_URL).catch((error) => {

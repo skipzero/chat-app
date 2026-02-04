@@ -1,12 +1,8 @@
-import { createContext } from "@chat/api/context";
-import { appRouter } from "@chat/api/routers/index";
-import { auth } from "@chat/auth";
-import { env } from "@chat/env/server";
-import { OpenAPIHandler } from "@orpc/openapi/node";
-import { OpenAPIReferencePlugin } from "@orpc/openapi/plugins";
-import { onError } from "@orpc/server";
-import { RPCHandler } from "@orpc/server/node";
-import { ZodToJsonSchemaConverter } from "@orpc/zod/zod4";
+import { devToolsMiddleware } from "@ai-sdk/devtools";
+import { google } from "@ai-sdk/google";
+import { auth } from "@chat-app/auth";
+import { env } from "@chat-app/env/server";
+import { streamText, type UIMessage, convertToModelMessages, wrapLanguageModel } from "ai";
 import { toNodeHandler } from "better-auth/node";
 import cors from "cors";
 import express from "express";
@@ -24,43 +20,20 @@ app.use(
 
 app.all("/api/auth{/*path}", toNodeHandler(auth));
 
-const rpcHandler = new RPCHandler(appRouter, {
-  interceptors: [
-    onError((error) => {
-      console.error(error);
-    }),
-  ],
-});
-const apiHandler = new OpenAPIHandler(appRouter, {
-  plugins: [
-    new OpenAPIReferencePlugin({
-      schemaConverters: [new ZodToJsonSchemaConverter()],
-    }),
-  ],
-  interceptors: [
-    onError((error) => {
-      console.error(error);
-    }),
-  ],
-});
-
-app.use(async (req, res, next) => {
-  const rpcResult = await rpcHandler.handle(req, res, {
-    prefix: "/rpc",
-    context: await createContext({ req }),
-  });
-  if (rpcResult.matched) return;
-
-  const apiResult = await apiHandler.handle(req, res, {
-    prefix: "/api-reference",
-    context: await createContext({ req }),
-  });
-  if (apiResult.matched) return;
-
-  next();
-});
-
 app.use(express.json());
+
+app.post("/ai", async (req, res) => {
+  const { messages = [] } = (req.body || {}) as { messages: UIMessage[] };
+  const model = wrapLanguageModel({
+    model: google("gemini-2.5-flash"),
+    middleware: devToolsMiddleware(),
+  });
+  const result = streamText({
+    model,
+    messages: await convertToModelMessages(messages),
+  });
+  result.pipeUIMessageStreamToResponse(res);
+});
 
 app.get("/", (_req, res) => {
   res.status(200).send("OK");
