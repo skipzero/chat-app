@@ -1,8 +1,9 @@
 {
-  "extends": "@chat/config/tsconfig.base.json",
+  "extends": "@chat-app/config/tsconfig.base.json",
   "compilerOptions": {
     "composite": true,
     "outDir": "dist",
+    "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"]
     },

@@ -1,6 +1,6 @@
-# chat
+# chat-app
 
-This project was created with [Better-T-Stack](https://github.com/AmanVarshney01/create-better-t-stack), a modern TypeScript stack that combines Next.js, Express, ORPC, and more.
+This project was created with [Better-T-Stack](https://github.com/AmanVarshney01/create-better-t-stack), a modern TypeScript stack that combines Next.js, Express, and more.
 
 ## Features
 
@@ -9,7 +9,6 @@ This project was created with [Better-T-Stack](https://github.com/AmanVarshney01
 - **TailwindCSS** - Utility-first CSS for rapid UI development
 - **shadcn/ui** - Reusable UI components
 - **Express** - Fast, unopinionated web framework
-- **oRPC** - End-to-end type-safe APIs with OpenAPI integration
 - **Bun** - Runtime environment
 - **Mongoose** - TypeScript-first ORM
 - **MongoDB** - Database engine
@@ -48,10 +47,10 @@ The API is running at [http://localhost:3000](http://localhost:3000).
 ## Project Structure
 
 ```
-chat/
+chat-app/
 ├── apps/
 │   ├── web/         # Frontend application (Next.js)
-│   └── server/      # Backend API (Express, ORPC)
+│   └── server/      # Backend API (Express)
 ├── packages/
 │   ├── api/         # API layer / business logic
 │   ├── auth/        # Authentication configuration & logic

@@ -1,5 +1,5 @@
 {
-  "name": "@chat/env",
+  "name": "@chat-app/env",
   "version": "0.0.0",
   "private": true,
   "type": "module",
@@ -14,7 +14,7 @@
     "zod": "catalog:"
   },
   "devDependencies": {
-    "@chat/config": "workspace:*",
+    "@chat-app/config": "workspace:*",
     "@types/bun": "catalog:",
     "typescript": "catalog:"
   }

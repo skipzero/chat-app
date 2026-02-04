@@ -10,13 +10,12 @@
     "start": "bun run dist/index.js"
   },
   "dependencies": {
-    "@chat/api": "workspace:*",
-    "@chat/auth": "workspace:*",
-    "@chat/db": "workspace:*",
-    "@chat/env": "workspace:*",
-    "@orpc/openapi": "catalog:",
-    "@orpc/server": "catalog:",
-    "@orpc/zod": "catalog:",
+    "@ai-sdk/devtools": "^0.0.2",
+    "@ai-sdk/google": "^3.0.1",
+    "@chat-app/auth": "workspace:*",
+    "@chat-app/db": "workspace:*",
+    "@chat-app/env": "workspace:*",
+    "ai": "catalog:",
     "better-auth": "catalog:",
     "cors": "^2.8.5",
     "dotenv": "catalog:",
@@ -24,10 +23,10 @@
     "zod": "catalog:"
   },
   "devDependencies": {
-    "@chat/config": "workspace:*",
+    "@chat-app/config": "workspace:*",
     "@types/bun": "catalog:",
     "@types/cors": "^2.8.17",
-    "@types/express": "catalog:",
+    "@types/express": "^5.0.1",
     "tsdown": "^0.16.5",
     "typescript": "catalog:"
   }
