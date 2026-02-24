@@ -1,7 +1,14 @@
 import { devToolsMiddleware } from "@ai-sdk/devtools";
 import { google } from "@ai-sdk/google";
-import { auth } from "@chat-app/auth";
-import { env } from "@chat-app/env/server";
+import { createContext } from "@chatapp/api/context";
+import { appRouter } from "@chatapp/api/routers/index";
+import { auth } from "@chatapp/auth";
+import { env } from "@chatapp/env/server";
+import { OpenAPIHandler } from "@orpc/openapi/node";
+import { OpenAPIReferencePlugin } from "@orpc/openapi/plugins";
+import { onError } from "@orpc/server";
+import { RPCHandler } from "@orpc/server/node";
+import { ZodToJsonSchemaConverter } from "@orpc/zod/zod4";
 import { streamText, type UIMessage, convertToModelMessages, wrapLanguageModel } from "ai";
 import { toNodeHandler } from "better-auth/node";
 import cors from "cors";
@@ -19,6 +26,42 @@ app.use(
 );
 
 app.all("/api/auth{/*path}", toNodeHandler(auth));
+
+const rpcHandler = new RPCHandler(appRouter, {
+  interceptors: [
+    onError((error) => {
+      console.error(error);
+    }),
+  ],
+});
+const apiHandler = new OpenAPIHandler(appRouter, {
+  plugins: [
+    new OpenAPIReferencePlugin({
+      schemaConverters: [new ZodToJsonSchemaConverter()],
+    }),
+  ],
+  interceptors: [
+    onError((error) => {
+      console.error(error);
+    }),
+  ],
+});
+
+app.use(async (req, res, next) => {
+  const rpcResult = await rpcHandler.handle(req, res, {
+    prefix: "/rpc",
+    context: await createContext({ req }),
+  });
+  if (rpcResult.matched) return;
+
+  const apiResult = await apiHandler.handle(req, res, {
+    prefix: "/api-reference",
+    context: await createContext({ req }),
+  });
+  if (apiResult.matched) return;
+
+  next();
+});
 
 app.use(express.json());
 

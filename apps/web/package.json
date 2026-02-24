@@ -10,9 +10,14 @@
   "dependencies": {
     "@ai-sdk/react": "^3.0.3",
     "@base-ui/react": "^1.0.0",
-    "@chat-app/auth": "workspace:*",
-    "@chat-app/env": "workspace:*",
-    "@tanstack/react-form": "^1.27.3",
+    "@chatapp/api": "workspace:*",
+    "@chatapp/auth": "workspace:*",
+    "@chatapp/env": "workspace:*",
+    "@orpc/client": "catalog:",
+    "@orpc/server": "catalog:",
+    "@orpc/tanstack-query": "^1.12.2",
+    "@tanstack/react-form": "^1.28.0",
+    "@tanstack/react-query": "^5.90.12",
     "ai": "catalog:",
     "babel-plugin-react-compiler": "^1.0.0",
     "better-auth": "catalog:",
@@ -32,8 +37,9 @@
     "zod": "catalog:"
   },
   "devDependencies": {
-    "@chat-app/config": "workspace:*",
+    "@chatapp/config": "workspace:*",
     "@tailwindcss/postcss": "^4.1.10",
+    "@tanstack/react-query-devtools": "^5.91.1",
     "@types/node": "^20",
     "@types/react": "^19.2.7",
     "@types/react-dom": "^19.2.3",

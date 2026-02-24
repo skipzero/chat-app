@@ -1,4 +1,4 @@
-import "@chat-app/env/web";
+import "@chatapp/env/web";
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {

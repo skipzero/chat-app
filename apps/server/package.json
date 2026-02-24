@@ -7,14 +7,18 @@
     "check-types": "tsc -b",
     "compile": "bun build --compile --minify --sourcemap --bytecode ./src/index.ts --outfile server",
     "dev": "bun run --hot src/index.ts",
-    "start": "bun run dist/index.js"
+    "start": "bun run dist/index.mjs"
   },
   "dependencies": {
     "@ai-sdk/devtools": "^0.0.2",
     "@ai-sdk/google": "^3.0.1",
-    "@chat-app/auth": "workspace:*",
-    "@chat-app/db": "workspace:*",
-    "@chat-app/env": "workspace:*",
+    "@chatapp/api": "workspace:*",
+    "@chatapp/auth": "workspace:*",
+    "@chatapp/db": "workspace:*",
+    "@chatapp/env": "workspace:*",
+    "@orpc/openapi": "catalog:",
+    "@orpc/server": "catalog:",
+    "@orpc/zod": "catalog:",
     "ai": "catalog:",
     "better-auth": "catalog:",
     "cors": "^2.8.5",
@@ -23,10 +27,10 @@
     "zod": "catalog:"
   },
   "devDependencies": {
-    "@chat-app/config": "workspace:*",
+    "@chatapp/config": "workspace:*",
     "@types/bun": "catalog:",
     "@types/cors": "^2.8.17",
-    "@types/express": "^5.0.1",
+    "@types/express": "catalog:",
     "tsdown": "^0.16.5",
     "typescript": "catalog:"
   }

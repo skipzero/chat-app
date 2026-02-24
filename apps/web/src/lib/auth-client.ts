@@ -1,4 +1,4 @@
-import { env } from "@chat-app/env/web";
+import { env } from "@chatapp/env/web";
 import { createAuthClient } from "better-auth/react";
 
 export const authClient = createAuthClient({

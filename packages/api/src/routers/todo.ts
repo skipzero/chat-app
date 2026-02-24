@@ -1,4 +1,4 @@
-import { Todo } from "@chat/db/models/todo.model";
+import { Todo } from "@chatapp/db/models/todo.model";
 import z from "zod";
 
 import { publicProcedure } from "../index";
@@ -18,12 +18,12 @@ export const todoRouter = {
   toggle: publicProcedure
     .input(z.object({ id: z.string(), completed: z.boolean() }))
     .handler(async ({ input }) => {
-      await Todo.updateOne({ _id: input.id }, { completed: input.completed });
+      await Todo.updateOne({ id: input.id }, { completed: input.completed });
       return { success: true };
     }),
 
   delete: publicProcedure.input(z.object({ id: z.string() })).handler(async ({ input }) => {
-    await Todo.deleteOne({ _id: input.id });
+    await Todo.deleteOne({ id: input.id });
     return { success: true };
   }),
 };
