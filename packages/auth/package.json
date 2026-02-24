@@ -1,5 +1,5 @@
 {
-  "name": "@chat-app/auth",
+  "name": "@chatapp/auth",
   "type": "module",
   "exports": {
     ".": {
@@ -11,14 +11,14 @@
   },
   "scripts": {},
   "dependencies": {
-    "@chat-app/db": "workspace:*",
-    "@chat-app/env": "workspace:*",
+    "@chatapp/db": "workspace:*",
+    "@chatapp/env": "workspace:*",
     "better-auth": "catalog:",
     "dotenv": "catalog:",
     "zod": "catalog:"
   },
   "devDependencies": {
-    "@chat-app/config": "workspace:*",
+    "@chatapp/config": "workspace:*",
     "typescript": "catalog:"
   }
 }

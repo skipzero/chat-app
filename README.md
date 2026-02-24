@@ -1,6 +1,6 @@
-# chat-app
+# chatapp
 
-This project was created with [Better-T-Stack](https://github.com/AmanVarshney01/create-better-t-stack), a modern TypeScript stack that combines Next.js, Express, and more.
+This project was created with [Better-T-Stack](https://github.com/AmanVarshney01/create-better-t-stack), a modern TypeScript stack that combines Next.js, Express, ORPC, and more.
 
 ## Features
 
@@ -9,6 +9,8 @@ This project was created with [Better-T-Stack](https://github.com/AmanVarshney01
 - **TailwindCSS** - Utility-first CSS for rapid UI development
 - **shadcn/ui** - Reusable UI components
 - **Express** - Fast, unopinionated web framework
+- **Socket IO** - Two way real time messaging
+- **oRPC** - End-to-end type-safe APIs with OpenAPI integration
 - **Bun** - Runtime environment
 - **Mongoose** - TypeScript-first ORM
 - **MongoDB** - Database engine
@@ -24,16 +26,10 @@ bun install
 
 ## Database Setup
 
-This project uses MongoDB with mongoose.
+This project uses MongoDB with Mongoose.
 
 1. Make sure you have MongoDB set up.
 2. Update your `apps/server/.env` file with your MongoDB connection URI.
-
-3. Apply the schema to your database:
-
-```bash
-bun run db:push
-```
 
 Then, run the development server:
 
@@ -47,10 +43,10 @@ The API is running at [http://localhost:3000](http://localhost:3000).
 ## Project Structure
 
 ```
-chat-app/
+chatapp/
 ├── apps/
 │   ├── web/         # Frontend application (Next.js)
-│   └── server/      # Backend API (Express)
+│   └── server/      # Backend API (Express, ORPC)
 ├── packages/
 │   ├── api/         # API layer / business logic
 │   ├── auth/        # Authentication configuration & logic
@@ -64,5 +60,3 @@ chat-app/
 - `bun run dev:web`: Start only the web application
 - `bun run dev:server`: Start only the server
 - `bun run check-types`: Check TypeScript types across all apps
-- `bun run db:push`: Push schema changes to database
-- `bun run db:studio`: Open database studio UI

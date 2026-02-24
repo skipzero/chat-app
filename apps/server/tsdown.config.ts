@@ -5,5 +5,5 @@ export default defineConfig({
   format: "esm",
   outDir: "./dist",
   clean: true,
-  noExternal: [/@chat-app\/.*/],
+  noExternal: [/@chatapp\/.*/],
 });

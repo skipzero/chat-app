@@ -1,6 +1,6 @@
 import type { Request } from "express";
 
-import { auth } from "@chat/auth";
+import { auth } from "@chatapp/auth";
 import { fromNodeHeaders } from "better-auth/node";
 
 interface CreateContextOptions {

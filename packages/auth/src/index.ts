@@ -1,5 +1,5 @@
-import { client } from "@chat-app/db";
-import { env } from "@chat-app/env/server";
+import { client } from "@chatapp/db";
+import { env } from "@chatapp/env/server";
 import { betterAuth } from "better-auth";
 import { mongodbAdapter } from "better-auth/adapters/mongodb";
 

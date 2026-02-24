@@ -1,5 +1,5 @@
 {
-  "name": "@chat/api",
+  "name": "@chatapp/api",
   "type": "module",
   "exports": {
     ".": {
@@ -11,9 +11,9 @@
   },
   "scripts": {},
   "dependencies": {
-    "@chat/auth": "workspace:*",
-    "@chat/db": "workspace:*",
-    "@chat/env": "workspace:*",
+    "@chatapp/auth": "workspace:*",
+    "@chatapp/db": "workspace:*",
+    "@chatapp/env": "workspace:*",
     "@orpc/client": "catalog:",
     "@orpc/openapi": "catalog:",
     "@orpc/server": "catalog:",
@@ -24,7 +24,7 @@
     "zod": "catalog:"
   },
   "devDependencies": {
-    "@chat/config": "workspace:*",
+    "@chatapp/config": "workspace:*",
     "@types/express": "catalog:",
     "typescript": "catalog:"
   }
