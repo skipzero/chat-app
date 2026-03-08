@@ -2,6 +2,9 @@ import { devToolsMiddleware } from "@ai-sdk/devtools";
 import { google } from "@ai-sdk/google";
 import { createContext } from "@chatapp/api/context";
 import { appRouter } from "@chatapp/api/routers/index";
+
+import { apiRouter } from "@chatapp/api/routers/index-routes";
+
 import { auth } from "@chatapp/auth";
 import { env } from "@chatapp/env/server";
 import { OpenAPIHandler } from "@orpc/openapi/node";
@@ -64,6 +67,8 @@ app.use(async (req, res, next) => {
 });
 
 app.use(express.json());
+
+app.use(('/api', apiRouter))
 
 app.post("/ai", async (req, res) => {
   const { messages = [] } = (req.body || {}) as { messages: UIMessage[] };
