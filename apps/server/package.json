@@ -24,6 +24,7 @@
     "cors": "^2.8.5",
     "dotenv": "catalog:",
     "express": "^5.1.0",
+    "winston": "^3.19.0",
     "zod": "catalog:"
   },
   "devDependencies": {
