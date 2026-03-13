@@ -1,0 +1,3 @@
+{
+  "extends": "@chatapp/config/tsconfig.base.json"
+}

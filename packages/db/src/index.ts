@@ -1,11 +1,12 @@
+import { env } from "@chatapp/env/server";
 import mongoose from "mongoose";
 
-const {DATABASE_URL, DB_NAME} = process.env;
 
-await mongoose.connect(DATABASE_URL || "").catch((error) => {
-	console.log("Error connecting to database:", error);
+const { DATABASE_NAME, DATABASE_URL } = env;
+await mongoose.connect(DATABASE_URL).catch((error) => {
+  console.log("Error connecting to database:", error);
 });
 
-const client = mongoose.connection.getClient().db(DB_NAME)	;
+const client = mongoose.connection.getClient().db(DATABASE_NAME);
 
 export { client };
