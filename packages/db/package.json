@@ -1,29 +1,23 @@
 {
-  "name": "@chat-app/db",
+  "name": "@chatapp/db",
   "type": "module",
   "exports": {
     ".": {
-      "types": "./dist/index.d.ts",
       "default": "./src/index.ts"
     },
     "./*": {
-      "types": "./dist/*.d.ts",
       "default": "./src/*.ts"
     }
   },
-  "scripts": {
-    "build": "tsdown"
+  "scripts": {},
+  "dependencies": {
+    "@chatapp/env": "workspace:*",
+    "dotenv": "catalog:",
+    "mongoose": "catalog:",
+    "zod": "catalog:"
   },
   "devDependencies": {
-    "tsdown": "catalog:",
-    "@chat-app/config": "workspace:*"
-  },
-  "peerDependencies": {
-    "typescript": "^5"
-  },
-  "dependencies": {
-    "mongoose": "catalog:",
-    "dotenv": "catalog:",
-    "zod": "catalog:"
+    "@chatapp/config": "workspace:*",
+    "typescript": "catalog:"
   }
 }

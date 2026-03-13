@@ -1,30 +1,24 @@
 {
-  "name": "@chat-app/auth",
+  "name": "@chatapp/auth",
+  "type": "module",
   "exports": {
     ".": {
-      "types": "./dist/index.d.ts",
       "default": "./src/index.ts"
     },
     "./*": {
-      "types": "./dist/*.d.ts",
       "default": "./src/*.ts"
     }
   },
-  "type": "module",
-  "scripts": {
-    "build": "tsdown"
-  },
-  "devDependencies": {
-    "tsdown": "catalog:",
-    "@chat-app/config": "workspace:*"
-  },
-  "peerDependencies": {
-    "typescript": "^5"
-  },
+  "scripts": {},
   "dependencies": {
+    "@chatapp/db": "workspace:*",
+    "@chatapp/env": "workspace:*",
     "better-auth": "catalog:",
     "dotenv": "catalog:",
-    "zod": "catalog:",
-    "@chat-app/db": "workspace:*"
+    "zod": "catalog:"
+  },
+  "devDependencies": {
+    "@chatapp/config": "workspace:*",
+    "typescript": "catalog:"
   }
 }
