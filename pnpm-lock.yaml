@@ -34,8 +34,8 @@ catalogs:
       specifier: ^8.14.0
       version: 8.20.0
     next:
-      specifier: 16.0.7
-      version: 16.0.7
+      specifier: 16.0.9
+      version: 16.0.9
     tsdown:
       specifier: ^0.15.5
       version: 0.15.12
