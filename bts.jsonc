@@ -1,29 +1,31 @@
-// Better-T-Stack configuration file
-// safe to delete
+// Better-T-Stack
+//
+// Website: https://www.better-t-stack.dev/
+// Stack Builder: https://www.better-t-stack.dev/new
+// Analytics: https://www.better-t-stack.dev/analytics
+// Showcase: https://www.better-t-stack.dev/showcase
+// Sponsor: https://github.com/sponsors/AmanVarshney01
+//
+// Add new addons with: bun create better-t-stack add
+// This file is safe to delete
 
 {
   "$schema": "https://r2.better-t-stack.dev/schema.json",
-  "version": "3.4.2",
-  "createdAt": "2025-11-18T15:39:54.204Z",
+  "version": "3.21.0",
+  "createdAt": "2026-02-14T17:33:41.506Z",
+  "reproducibleCommand": "bun create better-t-stack@latest chatapp --frontend next --backend express --runtime bun --database mongodb --orm mongoose --api orpc --auth better-auth --payments none --addons none --examples todo ai --db-setup mongodb-atlas --web-deploy none --server-deploy none --no-git --package-manager bun --install",
   "database": "mongodb",
   "orm": "mongoose",
-  "backend": "self",
-  "runtime": "none",
-  "frontend": [
-    "next"
-  ],
-  "addons": [
-    "turborepo",
-    "oxlint"
-  ],
-  "examples": [
-    "todo",
-    "ai"
-  ],
+  "backend": "express",
+  "runtime": "bun",
+  "frontend": ["next"],
+  "addons": [],
+  "examples": ["todo", "ai"],
   "auth": "better-auth",
-  "packageManager": "pnpm",
+  "payments": "none",
+  "packageManager": "bun",
   "dbSetup": "mongodb-atlas",
   "api": "orpc",
   "webDeploy": "none",
-  "serverDeploy": "none"
+  "serverDeploy": "none",
 }
