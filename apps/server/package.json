@@ -10,17 +10,11 @@
     "start": "bun run dist/index.mjs"
   },
   "dependencies": {
-    "@ai-sdk/devtools": "^0.0.2",
-    "@ai-sdk/google": "^3.0.1",
     "@chatapp/api": "workspace:*",
     "@chatapp/auth": "workspace:*",
     "@chatapp/db": "workspace:*",
     "@chatapp/env": "workspace:*",
-    "@orpc/openapi": "catalog:",
-    "@orpc/server": "catalog:",
-    "@orpc/zod": "catalog:",
     "@types/socket.io": "^3.0.2",
-    "ai": "catalog:",
     "better-auth": "catalog:",
     "cors": "^2.8.5",
     "dotenv": "catalog:",
