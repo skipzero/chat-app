@@ -1,12 +1,12 @@
 "use client";
 
-import { env } from "@chat-app/env/web";
+import { env } from "@chatapp/env/web";
 import { Send } from "lucide-react";
 // Temporary local Message type definition
 type Message = {
   id?: string;
   text: string;
-  role?: "user" | "assistant";
+  role?: string;
   parts?: { type: "text"; text: string }[];
 };
 
@@ -14,7 +14,7 @@ import { useEffect, useRef, useState } from "react";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { set } from "zod";
+// import { set } from "zod";
 
 export default function ChatPage() {
   const [input, setInput] = useState("");
@@ -55,9 +55,9 @@ export default function ChatPage() {
             -- No Messages Yet. Start the conversation! --
           </div>
         ) : (
-          messages.map((message) => (
+          messages.map((message, index) => (
             <div
-              key={message.id}
+              key={index}
               className={`p-3 rounded-lg ${
                 message.role === "user" ? "bg-primary/10 ml-8" : "bg-secondary/20 mr-8"
               }`}

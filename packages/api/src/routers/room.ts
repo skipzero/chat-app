@@ -1,4 +1,4 @@
-import { Room } from "@chatapp/db/models/rooms.model";
+import Room from "@chatapp/db/models/rooms.model";
 import z from "zod";
 
 import { protectedProcedure } from "../index";
