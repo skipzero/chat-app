@@ -1,0 +1,26 @@
+name: Deploy to Droplet via SSH
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Deploy with SSH
+        uses: appleboy/ssh-action@v1.0.0 # Action from the GitHub Marketplace
+        with:
+          host: ${{ secrets.DEPLOY_HOST }}
+          username: ${{ secrets.DEPLOY_USERNAME }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            # Commands to run on your Droplet
+            cd /path/to/your/app
+            git pull origin main
+            # e.g., restart your application service (using pm2, systemd, or docker compose)
+            pm2 restart all
