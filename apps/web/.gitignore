@@ -8,6 +8,8 @@
 !.yarn/releases
 !.yarn/versions
 
+.env*
+
 # Testing
 /coverage
 

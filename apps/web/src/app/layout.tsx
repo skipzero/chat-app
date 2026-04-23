@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-
 import { Geist, Geist_Mono } from "next/font/google";
 
 import "../index.css";
@@ -17,8 +16,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "chat-app",
-  description: "chat-app",
+  title: "chatapp",
+  description: "chatapp",
 };
 
 export default function RootLayout({

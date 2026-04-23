@@ -16,6 +16,6 @@
   "devDependencies": {
     "@chatapp/config": "workspace:*",
     "@types/bun": "catalog:",
-    "typescript": "catalog:"
+    "typescript": "^5"
   }
 }

@@ -1,6 +1,4 @@
-import Link from "next/link";
-import { useRouter } from "next/navigation";
-
+import { Button } from "@chatapp/ui/components/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -9,11 +7,12 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { authClient } from "@/lib/auth-client";
+} from "@chatapp/ui/components/dropdown-menu";
+import { Skeleton } from "@chatapp/ui/components/skeleton";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
 
-import { Button } from "./ui/button";
-import { Skeleton } from "./ui/skeleton";
+import { authClient } from "@/lib/auth-client";
 
 export default function UserMenu() {
   const router = useRouter();

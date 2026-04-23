@@ -2,23 +2,29 @@
 
 import { env } from "@chatapp/env/web";
 import { Send } from "lucide-react";
-// Temporary local Message type definition
-type Message = {
-  id?: string;
-  text: string;
-  role?: string;
-  parts?: { type: "text"; text: string }[];
-};
 
-import { useEffect, useRef, useState } from "react";
+import { useState, useEffect, useRef } from "react";
+import { useWebSocket } from "../../lib/useWebSocket";
 
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-// import { set } from "zod";
+import { getMessages, getConversations, sendMessage, type Message, type Conversation } from "../../lib/api";
+import { authClient } from "@/lib/auth-client";
 
 export default function ChatPage() {
-  const [input, setInput] = useState("");
-  const [messages, setMessages] = useState<Message[]>([])
+  const {data: session } = authClient.useSession();
+  const userId = session?.user.id || null;
+  const { messages: wsMessages, sendMessage: sendWsMessage }  = useWebSocket(userId);
+  const [ currentUser, setCurrentUser ] = useState(userId);
+  const [ selectedUser, setSelectedUser ] = useState(null);
+  const [ conversations, setConversations ] = useState<Conversation[]>([]);
+  const [ messages, setMessages ] = useState<Message[]>([]);
+  const [ input, setInput ] = useState("");
+  const [ isTyping, setIsTyping ] = useState(false);
+
+  const messagesEndRef = useRef<HTMLDivElement>(null);
+  const { Input, Button } = require("@/components/ui");
+
+
+
 
   const sendMessage = (newMessage: Message) => {
     setMessages(() => [
@@ -33,13 +39,12 @@ export default function ChatPage() {
   //   }),
   // });
 
-  const messagesEndRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const text = input.trim();
     if (!text) return;
@@ -55,9 +60,9 @@ export default function ChatPage() {
             -- No Messages Yet. Start the conversation! --
           </div>
         ) : (
-          messages.map((message, index) => (
+          messages.map((message) => (
             <div
-              key={index}
+              key={message.id}
               className={`p-3 rounded-lg ${
                 message.role === "user" ? "bg-primary/10 ml-8" : "bg-secondary/20 mr-8"
               }`}
@@ -83,7 +88,7 @@ export default function ChatPage() {
         <Input
           name="prompt"
           value={input}
-          onChange={(e) => setInput(e.target.value)}
+          onChange={(e: ChangeEvent<HTMLInputElement>) => setInput(e.target.value)}
           placeholder="Type your message..."
           className="flex-1"
           autoComplete="off"

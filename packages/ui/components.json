@@ -5,18 +5,18 @@
   "tsx": true,
   "tailwind": {
     "config": "",
-    "css": "../../packages/ui/src/styles/globals.css",
+    "css": "src/styles/globals.css",
     "baseColor": "neutral",
     "cssVariables": true,
     "prefix": ""
   },
   "iconLibrary": "lucide",
   "aliases": {
-    "components": "@/components",
+    "components": "@chatapp/ui/components",
     "utils": "@chatapp/ui/lib/utils",
-    "ui": "@chatapp/ui/components",
-    "lib": "@/lib",
-    "hooks": "@/hooks"
+    "hooks": "@chatapp/ui/hooks",
+    "lib": "@chatapp/ui/lib",
+    "ui": "@chatapp/ui/components"
   },
   "menuColor": "default",
   "menuAccent": "subtle",
