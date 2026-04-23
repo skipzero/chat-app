@@ -13,11 +13,11 @@
   "dependencies": {
     "@chatapp/env": "workspace:*",
     "dotenv": "catalog:",
-    "mongoose": "catalog:",
+    "mongoose": "^8.14.0",
     "zod": "catalog:"
   },
   "devDependencies": {
     "@chatapp/config": "workspace:*",
-    "typescript": "catalog:"
+    "typescript": "^5"
   }
 }

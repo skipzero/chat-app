@@ -1,8 +1,6 @@
 "use client";
 
-const TITLE_TEXT = `Welcome to the Chat App!
-This is a real-time chat application built with a modern tech stack. 
-Feel free to explore the features and have fun chatting!`;
+const TITLE_TEXT = ` `;
 
 export default function Home() {
   return (

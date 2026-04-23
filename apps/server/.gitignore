@@ -3,6 +3,8 @@ dist/
 /build
 /out/
 
+.env*
+
 # dev
 .yarn/
 !.yarn/patches

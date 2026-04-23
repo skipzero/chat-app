@@ -1,3 +1,6 @@
+import { Button } from "@chatapp/ui/components/button";
+import { Input } from "@chatapp/ui/components/input";
+import { Label } from "@chatapp/ui/components/label";
 import { useForm } from "@tanstack/react-form";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
@@ -6,9 +9,6 @@ import z from "zod";
 import { authClient } from "@/lib/auth-client";
 
 import Loader from "./loader";
-import { Button } from "./ui/button";
-import { Input } from "./ui/input";
-import { Label } from "./ui/label";
 
 export default function SignInForm({ onSwitchToSignUp }: { onSwitchToSignUp: () => void }) {
   const router = useRouter();
@@ -106,14 +106,12 @@ export default function SignInForm({ onSwitchToSignUp }: { onSwitchToSignUp: () 
           </form.Field>
         </div>
 
-        <form.Subscribe>
-          {(state) => (
-            <Button
-              type="submit"
-              className="w-full"
-              disabled={!state.canSubmit || state.isSubmitting}
-            >
-              {state.isSubmitting ? "Submitting..." : "Sign In"}
+        <form.Subscribe
+          selector={(state) => ({ canSubmit: state.canSubmit, isSubmitting: state.isSubmitting })}
+        >
+          {({ canSubmit, isSubmitting }) => (
+            <Button type="submit" className="w-full" disabled={!canSubmit || isSubmitting}>
+              {isSubmitting ? "Submitting..." : "Sign In"}
             </Button>
           )}
         </form.Subscribe>
