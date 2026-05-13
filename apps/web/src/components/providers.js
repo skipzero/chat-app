@@ -1,0 +1,9 @@
+"use client";
+import { Toaster } from "@chatapp/ui/components/sonner";
+import { ThemeProvider } from "./theme-provider";
+export default function Providers({ children }) {
+    return (<ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
+      {children}
+      <Toaster richColors/>
+    </ThemeProvider>);
+}

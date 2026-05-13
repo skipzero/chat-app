@@ -20,6 +20,7 @@
     "next-themes": "catalog:",
     "react": "catalog:",
     "react-dom": "catalog:",
+    "socket.io-client": "^4.8.1",
     "sonner": "catalog:",
     "zod": "catalog:"
   },

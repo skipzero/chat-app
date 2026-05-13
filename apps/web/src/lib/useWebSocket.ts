@@ -1,93 +1,98 @@
 "use client";
 
-import { useEffect, useRef, useState, useCallback } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
+import { io, type Socket } from "socket.io-client";
 
-type Message = {
+type ChatMessage = {
   _id: string;
+  roomId: string;
   senderId: string;
-  receiverId: string;
   content: string;
   createdAt: string;
   read: boolean;
-};      
+};
 
-type WebSocketMessage =
-  | { type: "connected"; userId: string }
-  | { type: "message"; message: Message }
-  | { type: "typing"; senderId: string };
-
-const WS_URL = process.env.NEXT_PUBLIC_WS_URL || "ws://localhost:3000/ws";
+const WS_URL = process.env.NEXT_PUBLIC_SERVER_URL || "http://localhost:3000";
 
 export function useWebSocket(userId: string | null) {
-  const wsRef = useRef<WebSocket | null>(null);
+  const socketRef = useRef<Socket | null>(null);
+  const prevRoomRef = useRef<string | null>(null);
   const [isConnected, setIsConnected] = useState(false);
-  const [messages, setMessages] = useState<Message[]>([]);
+  const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [typingUser, setTypingUser] = useState<string | null>(null);
 
   const connect = useCallback(() => {
-    if (!userId) return;
+    if (!userId || socketRef.current) return;
 
-    const readyState = wsRef.current?.readyState;
-    if (readyState === WebSocket.OPEN || readyState === WebSocket.CONNECTING) return;
+    const socket = io(WS_URL, {
+      auth: { userId },
+      path: "/socket.io",
+      withCredentials: true,
+    });
 
-    const ws = new WebSocket(WS_URL);
-    wsRef.current = ws;
+    socketRef.current = socket;
 
-    ws.onopen = () => {
-      if (wsRef.current !== ws) return;
-      ws.send(JSON.stringify({ type: "auth", userId }));
+    socket.on("connect", () => {
       setIsConnected(true);
-    };
+    });
 
-    ws.onmessage = (event) => {
-      if (wsRef.current !== ws) return;
-      const data = JSON.parse(event.data) as WebSocketMessage;
-      if (data.type === "message") {
-        setMessages((prev) => [...prev, data.message]);
-      } else if (data.type === "typing") {
-        setTypingUser(data.senderId);
-        setTimeout(() => setTypingUser(null), 3000);
-      }
-    };
-
-    ws.onclose = () => {
-      if (wsRef.current !== ws) return;
-      wsRef.current = null;
+    socket.on("disconnect", () => {
       setIsConnected(false);
-    };
+    });
 
-    ws.onerror = (err) => {
-      if (wsRef.current !== ws) return;
-      console.error(`WebSocket error: ${err} User ID: ${userId}`);
-      console.log(err);
-      wsRef.current = null;
-      setIsConnected(false);
-    };
+    socket.on("message", (message: ChatMessage) => {
+      setMessages((prev) => [...prev, message]);
+    });
+
+    socket.on("typing", ({ senderId }: { senderId: string }) => {
+      setTypingUser(senderId);
+      setTimeout(() => setTypingUser(null), 3000);
+    });
+
+    socket.on("connect_error", (error) => {
+      console.error("Socket connection error:", error);
+    });
   }, [userId]);
 
   const disconnect = useCallback(() => {
-    if (!wsRef.current) return;
-    wsRef.current.close();
-    wsRef.current = null;
+    if (!socketRef.current) return;
+    socketRef.current.disconnect();
+    socketRef.current = null;
     setIsConnected(false);
   }, []);
 
+  const joinRoom = useCallback((roomId: string) => {
+    if (!socketRef.current || !roomId) return;
+    if (prevRoomRef.current && prevRoomRef.current !== roomId) {
+      socketRef.current.emit("leave-room", prevRoomRef.current);
+    }
+    socketRef.current.emit("join-room", { roomId });
+    prevRoomRef.current = roomId;
+    setMessages([]);
+  }, []);
+
+  const leaveRoom = useCallback((roomId: string) => {
+    if (!socketRef.current || !roomId) return;
+    socketRef.current.emit("leave-room", roomId);
+    if (prevRoomRef.current === roomId) {
+      prevRoomRef.current = null;
+    }
+  }, []);
+
   const sendMessage = useCallback(
-    (receiverId: string, content: string) => {
-      if (!userId || !wsRef.current || wsRef.current.readyState !== WebSocket.OPEN) return;
-      wsRef.current.send(
-        JSON.stringify({ type: "message", senderId: userId, receiverId, content })
-      );
+    (roomId: string, content: string) => {
+      if (!userId || !socketRef.current || !roomId) return;
+      socketRef.current.emit("send-message", { roomId, content });
     },
-    [userId]
+    [userId],
   );
 
   const sendTyping = useCallback(
-    (receiverId: string) => {
-      if (!userId || !wsRef.current || wsRef.current.readyState !== WebSocket.OPEN) return;
-      wsRef.current.send(JSON.stringify({ type: "typing", senderId: userId, receiverId }));
+    (roomId: string) => {
+      if (!userId || !socketRef.current || !roomId) return;
+      socketRef.current.emit("typing", { roomId });
     },
-    [userId]
+    [userId],
   );
 
   useEffect(() => {
@@ -95,5 +100,14 @@ export function useWebSocket(userId: string | null) {
     return () => disconnect();
   }, [connect, disconnect]);
 
-  return { isConnected, messages, typingUser, sendMessage, sendTyping, setMessages };
+  return {
+    isConnected,
+    messages,
+    typingUser,
+    joinRoom,
+    leaveRoom,
+    sendMessage,
+    sendTyping,
+    setMessages,
+  };
 }
