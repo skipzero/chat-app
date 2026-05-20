@@ -3,6 +3,7 @@ import mongoose, { type Model } from "mongoose";
 interface MessageDocument {
   roomId: string;
   senderId: string;
+  senderName: string;
   content: string;
   read: boolean;
 }
@@ -13,6 +14,7 @@ const messageSchema = new Schema<MessageDocument>(
   {
     roomId: { type: String, ref: "Room", required: true },
     senderId: { type: String, required: true },
+    senderName: { type: String, required: true },
     content: { type: String, required: true },
     read: { type: Boolean, default: false },
   },

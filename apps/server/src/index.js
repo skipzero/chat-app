@@ -1,5 +1,5 @@
 import { auth } from "@chatapp/auth";
-import { env } from "@chatapp/env/server";
+import { CORS_ORIGIN } from "@chatapp/env/server/env";
 import { toNodeHandler } from "better-auth/node";
 import cors from "cors";
 import express from "express";
@@ -8,7 +8,7 @@ import { Server as SocketIOServer } from "socket.io";
 import { Room, Message } from "@chatapp/db";
 const app = express();
 app.use(cors({
-    origin: env.CORS_ORIGIN,
+    origin: CORS_ORIGIN,
     methods: ["GET", "POST", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"],
     credentials: true,
@@ -56,7 +56,7 @@ app.get("/api/rooms/:roomId/messages", async (req, res) => {
 const server = http.createServer(app);
 const io = new SocketIOServer(server, {
     cors: {
-        origin: env.CORS_ORIGIN,
+        origin: CORS_ORIGIN,
         methods: ["GET", "POST"],
         credentials: true,
     },
@@ -83,12 +83,13 @@ io.on("connection", (socket) => {
             return;
         socket.leave(roomId);
     });
-    socket.on("send-message", async ({ roomId, content }) => {
-        if (!roomId || !content)
+    socket.on("send-message", async ({ roomId, senderName, content }) => {
+        if (!roomId || !senderName || !content)
             return;
         const message = await Message.create({
             roomId,
             senderId: userId,
+            senderName,
             content,
             read: false,
         });
@@ -97,7 +98,7 @@ io.on("connection", (socket) => {
     socket.on("typing", ({ roomId }) => {
         if (!roomId)
             return;
-        socket.to(roomId).emit("typing", { senderId: userId });
+        socket.to(roomId).emit("typing", { senderName });
     });
 });
 const port = 3000;
