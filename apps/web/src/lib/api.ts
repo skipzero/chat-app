@@ -1,10 +1,12 @@
 const SERVER_URL = process.env.NEXT_PUBLIC_SERVER_URL || "http://localhost:3000";
+const DATABASE_NAME = process.env.NEXT_PUBLIC_DATABASE_NAME;
 const API_BASE = `${SERVER_URL}/api`;
 
 export interface Message {
   _id: string;
   roomId: string;
   senderId: string;
+  senderName: string;
   receiverId?: string;
   content: string;
   createdAt: string;
@@ -53,11 +55,11 @@ export async function createRoom(name: string, description?: string): Promise<Ro
   });
 }
 
-export async function sendMessage(senderId: string, receiverId: string, content: string): Promise<Message> {
+export async function sendMessage(senderId: string, senderName: string, receiverId: string, content: string): Promise<Message> {
   const res = await fetch(`${API_BASE}/chat/messages`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ senderId, receiverId, content }),
+    body: JSON.stringify({ senderId, senderName, receiverId, content }),
   });
   if (!res.ok) throw new Error("Failed to send message");
   return res.json();

@@ -7,6 +7,7 @@ type ChatMessage = {
   _id: string;
   roomId: string;
   senderId: string;
+  senderName: string;
   content: string;
   createdAt: string;
   read: boolean;
@@ -34,19 +35,23 @@ export function useWebSocket(userId: string | null) {
 
     socket.on("connect", () => {
       setIsConnected(true);
+      console.log("Connected to WebSocket server");
     });
 
     socket.on("disconnect", () => {
       setIsConnected(false);
+      console.log("Disconnected from WebSocket server");
     });
 
     socket.on("message", (message: ChatMessage) => {
       setMessages((prev) => [...prev, message]);
+      console.log("Received message:", message);
     });
 
     socket.on("typing", ({ senderId }: { senderId: string }) => {
       setTypingUser(senderId);
       setTimeout(() => setTypingUser(null), 3000);
+      console.log("User is typing:", senderId);
     });
 
     socket.on("connect_error", (error) => {
@@ -80,9 +85,9 @@ export function useWebSocket(userId: string | null) {
   }, []);
 
   const sendMessage = useCallback(
-    (roomId: string, content: string) => {
+    (roomId: string, senderName: string, content: string) => {
       if (!userId || !socketRef.current || !roomId) return;
-      socketRef.current.emit("send-message", { roomId, content });
+      socketRef.current.emit("send-message", { roomId, senderName, content });
     },
     [userId],
   );

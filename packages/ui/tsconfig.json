@@ -1,7 +1,7 @@
 {
   "extends": "@chatapp/config/tsconfig.base.json",
   "compilerOptions": {
-    "baseUrl": ".",
+    "paths": {"*": ["./*"]},
     "jsx": "react-jsx",
     "lib": ["ESNext", "DOM", "DOM.Iterable"],
     "paths": {

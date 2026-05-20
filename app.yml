@@ -1,0 +1,20 @@
+name: chatapp
+services:
+  - name: server
+    source_dir: apps/server
+    build_command: bun install && bun run --filter server build
+    run_command: bun run --filter server start
+    envs:
+      - key: DATABASE_URL
+      - key: DATABASE_NAME
+      - key: BETTER_AUTH_SECRET
+      - key: BETTER_AUTH_URL
+      - key: CORS_ORIGIN
+  - name: web
+    source_dir: apps/web
+    build_command: bun install && bun run --filter web build
+    run_command: bun run --filter web start
+    envs:
+      - key: NEXT_PUBLIC_SERVER_URL
+      - key: BETTER_AUTH_URL
+      - key: CORS_ORIGIN

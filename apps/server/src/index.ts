@@ -108,12 +108,13 @@ io.on("connection", (socket) => {
     socket.leave(roomId);
   });
 
-  socket.on("send-message", async ({ roomId, content }: { roomId: string; content: string }) => {
+  socket.on("send-message", async ({ roomId, senderName, content }: { roomId: string; senderName: string; content: string }) => {
     if (!roomId || !content) return;
 
     const message = await Message.create({
       roomId,
       senderId: userId,
+      senderName,
       content,
       read: false,
     });
@@ -127,7 +128,7 @@ io.on("connection", (socket) => {
   });
 });
 
-const port = 3000;
+const port = Number(process.env.PORT || process.env.port || 3000) || 3000;
 
 server.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`);
