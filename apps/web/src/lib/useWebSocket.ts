@@ -34,24 +34,25 @@ export function useWebSocket(userId: string | null) {
     socketRef.current = socket;
 
     socket.on("connect", () => {
-      setIsConnected(true);
       console.log("Connected to WebSocket server");
+      setIsConnected(true);
     });
 
     socket.on("disconnect", () => {
-      setIsConnected(false);
       console.log("Disconnected from WebSocket server");
+      setIsConnected(false);
     });
 
     socket.on("message", (message: ChatMessage) => {
-      setMessages((prev) => [...prev, message]);
       console.log("Received message:", message);
+      setMessages((prev) => [...prev, message]);
     });
 
     socket.on("typing", ({ senderId }: { senderId: string }) => {
+      console.log("User is typing:", senderId);
+
       setTypingUser(senderId);
       setTimeout(() => setTypingUser(null), 3000);
-      console.log("User is typing:", senderId);
     });
 
     socket.on("connect_error", (error) => {
@@ -61,6 +62,7 @@ export function useWebSocket(userId: string | null) {
 
   const disconnect = useCallback(() => {
     if (!socketRef.current) return;
+    console.log("Disconnecting from WebSocket server");
     socketRef.current.disconnect();
     socketRef.current = null;
     setIsConnected(false);
@@ -86,6 +88,8 @@ export function useWebSocket(userId: string | null) {
 
   const sendMessage = useCallback(
     (roomId: string, senderName: string, content: string) => {
+      
+      console.log("Sending message:", { roomId, senderName, content });
       if (!userId || !socketRef.current || !roomId) return;
       socketRef.current.emit("send-message", { roomId, senderName, content });
     },
@@ -95,6 +99,7 @@ export function useWebSocket(userId: string | null) {
   const sendTyping = useCallback(
     (roomId: string) => {
       if (!userId || !socketRef.current || !roomId) return;
+      console.log("Sending typing notification:", { roomId });
       socketRef.current.emit("typing", { roomId });
     },
     [userId],
