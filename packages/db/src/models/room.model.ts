@@ -17,7 +17,7 @@ const roomSchema = new Schema<RoomDocument>(
     participants: [{ type: String }],
   },
   {
-    collection: "room",
+    collection: "rooms",
     timestamps: true,
   },
 );
