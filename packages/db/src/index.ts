@@ -4,7 +4,8 @@ import { Room } from "./models/room.model";
 import { Message } from "./models/message.model";
 
 const { DATABASE_NAME, DATABASE_URL } = env;
-await mongoose.connect(DATABASE_URL).catch((error) => {
+
+await mongoose.connect(DATABASE_URL, { dbName: DATABASE_NAME }).catch((error) => {
   console.log("Error connecting to database:", error);
 });
 

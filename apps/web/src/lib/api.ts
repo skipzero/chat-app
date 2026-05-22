@@ -1,5 +1,4 @@
 const SERVER_URL = process.env.NEXT_PUBLIC_SERVER_URL || "http://localhost:3000";
-const DATABASE_NAME = process.env.NEXT_PUBLIC_DATABASE_NAME;
 const API_BASE = `${SERVER_URL}/api`;
 
 export interface Message {
