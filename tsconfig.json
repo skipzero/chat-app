@@ -1,3 +1,4 @@
 {
-  "extends": "@chatapp/config/tsconfig.base.json"
+  "extends": "@chatapp/config/tsconfig.base.json",
+  "types": "node"
 }
