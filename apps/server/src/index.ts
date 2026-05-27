@@ -8,10 +8,10 @@ import { Server as SocketIOServer } from "socket.io";
 import { Room, Message } from "@chatapp/db";
 
 const app = express();
-
+// app.use(cors())
 app.use(
   cors({
-    origin: env.CORS_ORIGIN,
+    origin: process.env.CORS_ORIGIN,
     methods: ["GET", "POST", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"],
     credentials: true,
@@ -75,7 +75,7 @@ const server = http.createServer(app);
 
 const io = new SocketIOServer(server, {
   cors: {
-    origin: env.CORS_ORIGIN,
+    origin: process.env.CORS_ORIGIN,
     methods: ["GET", "POST"],
     credentials: true,
   },
@@ -131,5 +131,6 @@ io.on("connection", (socket) => {
 const port = Number(process.env.PORT || process.env.port || 3000) || 3000;
 
 server.listen(port, () => {
+  console.log('+++++++', process.env)
   console.log(`Server is running on http://localhost:${port}`);
 });
