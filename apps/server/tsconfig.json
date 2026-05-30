@@ -2,10 +2,13 @@
   "extends": "@chatapp/config/tsconfig.base.json",
   "compilerOptions": {
     "composite": true,
-    "types": "node",
+    "types": ["node", "express"],
     "outDir": "dist",
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": [
+        "./src/*",
+        "./@chatapp/*"
+      ]
     },
     "jsx": "react-jsx"
   }

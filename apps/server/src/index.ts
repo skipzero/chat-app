@@ -1,5 +1,5 @@
 import { auth } from "@chatapp/auth";
-import { env } from "@chatapp/env/server";
+import { env } from "@chatapp/env";
 import { toNodeHandler } from "better-auth/node";
 import cors from "cors";
 import express from "express";
@@ -7,11 +7,13 @@ import http from "http";
 import { Server as SocketIOServer } from "socket.io";
 import { Room, Message } from "@chatapp/db";
 
+const { CORS_ORIGIN, PORT } = env;
+
 const app = express();
 // app.use(cors())
 app.use(
   cors({
-    origin: process.env.CORS_ORIGIN,
+    origin: CORS_ORIGIN,
     methods: ["GET", "POST", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"],
     credentials: true,
@@ -75,7 +77,7 @@ const server = http.createServer(app);
 
 const io = new SocketIOServer(server, {
   cors: {
-    origin: process.env.CORS_ORIGIN,
+    origin: CORS_ORIGIN,
     methods: ["GET", "POST"],
     credentials: true,
   },
@@ -128,9 +130,8 @@ io.on("connection", (socket) => {
   });
 });
 
-const port = Number(process.env.PORT || process.env.port || 3000) || 3000;
+const port = Number(PORT || 3000) || 3000;
 
 server.listen(port, () => {
-  console.log('+++++++', process.env)
   console.log(`Server is running on http://localhost:${port}`);
 });
