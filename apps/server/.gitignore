@@ -1,13 +1,9 @@
-
-
 # prod
 dist/
 /build
 /out/
 
 .env*
-
-*.bck
 
 # dev
 .yarn/
