@@ -1,12 +1,14 @@
-import { env } from "@chatapp/env/server";
+import { env } from "@chatapp/env";
 import mongoose from "mongoose";
 import { Room } from "./models/room.model";
 import { Message } from "./models/message.model";
 
-await mongoose.connect(env.DATABASE_URL, { dbName: env.DATABASE_NAME }).catch((error) => {
+const { DATABASE_URL, DATABASE_NAME } = env;
+
+await mongoose.connect(DATABASE_URL, { dbName: DATABASE_NAME }).catch((error) => {
   console.log("Error connecting to database:", error);
 });
 
-const client = mongoose.connection.getClient().db(env.DATABASE_NAME);
+const client = mongoose.connection.getClient().db(DATABASE_NAME);
 
 export { client, Room, Message };
