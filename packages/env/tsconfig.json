@@ -1,4 +1,7 @@
 {
   "extends": "@chatapp/config/tsconfig.base.json",
-  "types": ["node"]
+  "types": ["node"],
+  "compilerOptions": {
+    "skipLibCheck": true
+  },
 }

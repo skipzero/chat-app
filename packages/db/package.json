@@ -12,9 +12,9 @@
   "scripts": {},
   "dependencies": {
     "@chatapp/env": "workspace:*",
-    "dotenv": "catalog:",
+    "dotenv": "17.4.2",
     "mongoose": "^8.14.0",
-    "zod": "catalog:"
+    "zod": "4.4.1"
   },
   "devDependencies": {
     "@chatapp/config": "workspace:*",

@@ -13,9 +13,9 @@
   "dependencies": {
     "@chatapp/db": "workspace:*",
     "@chatapp/env": "workspace:*",
-    "better-auth": "catalog:",
-    "dotenv": "catalog:",
-    "zod": "catalog:"
+    "better-auth": "1.5.2",
+    "dotenv": "17.4.2",
+    "zod": "4.4.1"
   },
   "devDependencies": {
     "@chatapp/config": "workspace:*",

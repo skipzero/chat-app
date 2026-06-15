@@ -1,8 +1,8 @@
-import { env as webEnv} from "@chatapp/env";
+import { chatEnv } from "@chatapp/env";
 import { createEnv } from "@t3-oss/env-nextjs";
 import { z } from "zod";
 
-const { NEXT_PUBLIC_SERVER_URL } = webEnv;
+const { NEXT_PUBLIC_SERVER_URL } = chatEnv;
 
 export const env = createEnv({
   client: {

@@ -1,5 +1,7 @@
 import { auth } from "@chatapp/auth";
-import { env } from "@chatapp/env";
+// import { env } from "@chatapp/env"
+import "dotenv/config";
+
 import { toNodeHandler } from "better-auth/node";
 import cors from "cors";
 import express from "express";
@@ -7,13 +9,30 @@ import http from "http";
 import { Server as SocketIOServer } from "socket.io";
 import { Room, Message } from "@chatapp/db";
 
-const { CORS_ORIGIN, PORT } = env;
+
+
+// const { CORS_ORIGIN, PORT } = process.env;
 
 const app = express();
 // app.use(cors())
+// const allowedOrigins: string[] = process.env.CORS_ORIGIN ? process.env.CORS_ORIGIN.split(",").map(origin => origin.trim()) : [];
+
+// const corsOptions: CorsOptions = {
+//   origin: (origin: string | undefined, callback: (err: Error | null, allowed?: boolean) => void) => {
+//     if (!origin) return callback(null, true);
+// 
+//     if (allowedOrigins.includes(origin)) {
+//       callback(null, true);
+//     } else {
+//       callback(new Error('Not allowed by CORS'));
+//     }
+//   },
+//   credentials: true,
+// }
+
 app.use(
   cors({
-    origin: CORS_ORIGIN,
+    origin: process.env.CORS_ORIGIN,
     methods: ["GET", "POST", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"],
     credentials: true,
@@ -64,7 +83,8 @@ app.post("/api/rooms", async (req, res) => {
     participants: [],
   });
 
-  res.status(201).json(room);
+  const roomPayload = room.toJSON();
+  res.status(201).json(roomPayload);
 });
 
 app.get("/api/rooms/:roomId/messages", async (req, res) => {
@@ -77,7 +97,7 @@ const server = http.createServer(app);
 
 const io = new SocketIOServer(server, {
   cors: {
-    origin: CORS_ORIGIN,
+    origin: ['http://localhost:3000', 'http://localhost:3001'],
     methods: ["GET", "POST"],
     credentials: true,
   },
@@ -98,6 +118,7 @@ io.on("connection", (socket) => {
   const userId = socket.data.userId as string;
 
   socket.emit("connected", { userId });
+  console.log(`User connected: ${userId}`);
 
   socket.on("join-room", async ({ roomId }: { roomId: string }) => {
     if (!roomId) return;
@@ -110,18 +131,32 @@ io.on("connection", (socket) => {
     socket.leave(roomId);
   });
 
-  socket.on("send-message", async ({ roomId, senderName, content }: { roomId: string; senderName: string; content: string }) => {
-    if (!roomId || !content) return;
+  socket.on("send-message", async ({ roomId, senderName, content }: { roomId: string; senderName: string; content: string }, callback) => {
+    if (!roomId || !content) {
+      callback?.({ success: false, error: "Invalid roomId or content" });
+      return;
+    }
 
-    const message = await Message.create({
-      roomId,
-      senderId: userId,
-      senderName,
-      content,
-      read: false,
-    });
+    try {
+      const message = await Message.create({
+        roomId,
+        senderId: userId,
+        senderName,
+        content,
+        read: false,
+      });
+      const messagePayload = message.toJSON();
 
-    io.to(roomId).emit("message", message);
+      // Send acknowledgment to the sender
+      callback?.({ success: true, message: messagePayload });
+      console.log("Message saved:", messagePayload);
+
+      // Broadcast to all clients in the room
+      io.to(roomId).emit("message", messagePayload);
+    } catch (error) {
+      console.error("Error saving message:", error);
+      callback?.({ success: false, error: "Failed to save message" });
+    }
   });
 
   socket.on("typing", ({ roomId }: { roomId: string }) => {
@@ -130,7 +165,7 @@ io.on("connection", (socket) => {
   });
 });
 
-const port = Number(PORT || process.env.port || 3000) || 3000;
+const port = Number(process.env.PORT || process.env.port || 3000) || 3000;
 
 server.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`);

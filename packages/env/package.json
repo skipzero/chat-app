@@ -11,12 +11,12 @@
   "dependencies": {
     "@t3-oss/env-core": "^0.13.1",
     "@t3-oss/env-nextjs": "^0.13.1",
-    "dotenv": "catalog:",
-    "zod": "catalog:"
+    "dotenv": "17.4.2",
+    "zod": "4.4.1"
   },
   "devDependencies": {
     "@chatapp/config": "workspace:*",
-    "@types/bun": "catalog:",
+    "@types/bun": "1.3.14",
     "typescript": "^5"
   }
 }
