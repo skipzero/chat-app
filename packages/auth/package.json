@@ -13,7 +13,7 @@
   "dependencies": {
     "@chatapp/db": "workspace:*",
     "@chatapp/env": "workspace:*",
-    "better-auth": "1.5.2",
+    "better-auth": "1.6.11",
     "dotenv": "17.4.2",
     "zod": "4.4.1"
   },
