@@ -3,7 +3,7 @@ import { auth } from "@chatapp/auth";
 import "dotenv/config";
 
 import { toNodeHandler } from "better-auth/node";
-import cors from "cors";
+import cors, { type CorsOptions } from "cors";
 import express from "express";
 import http from "http";
 import { Server as SocketIOServer } from "socket.io";
@@ -15,24 +15,24 @@ import { Room, Message } from "@chatapp/db";
 
 const app = express();
 // app.use(cors())
-// const allowedOrigins: string[] = process.env.CORS_ORIGIN ? process.env.CORS_ORIGIN.split(",").map(origin => origin.trim()) : [];
+const allowedOrigins: string[] = process.env.CORS_ORIGIN ? process.env.CORS_ORIGIN.split(",").map(origin => origin.trim()) : [];
 
-// const corsOptions: CorsOptions = {
-//   origin: (origin: string | undefined, callback: (err: Error | null, allowed?: boolean) => void) => {
-//     if (!origin) return callback(null, true);
-// 
-//     if (allowedOrigins.includes(origin)) {
-//       callback(null, true);
-//     } else {
-//       callback(new Error('Not allowed by CORS'));
-//     }
-//   },
-//   credentials: true,
-// }
+const corsOpts: CorsOptions = {
+  origin: (origin: string | undefined, callback: (err: Error | null, allowed?: boolean) => void) => {
+    if (!origin) return callback(null, true);
+
+    if (allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+  credentials: true,
+}
 
 app.use(
   cors({
-    origin: process.env.CORS_ORIGIN,
+    origin: corsOpts.origin,
     methods: ["GET", "POST", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"],
     credentials: true,
