@@ -13,7 +13,7 @@
     "@chatapp/auth": "workspace:*",
     "@chatapp/db": "workspace:*",
     "@chatapp/env": "workspace:*",
-    "better-auth": "1.5.2",
+    "better-auth": "1.6.11",
     "cors": "^2.8.5",
     "dotenv": "^17.4.2",
     "express": "^5.1.0",
