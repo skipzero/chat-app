@@ -7,7 +7,8 @@ module.exports = {
     watch: false,
     env: {
       NODE_ENV: 'production',
-    }
+    },
+    log_date_format: "YYYY-MM-DD HH:mm:ss Z",
   },
   { 
     name: 'chat-server',
