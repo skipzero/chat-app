@@ -1,5 +1,5 @@
 const SERVER_URL = process.env.NEXT_PUBLIC_SERVER_URL || "http://localhost:3000";
-const API_BASE = `${SERVER_URL}/api`;
+const API_BASE = `/api`;
 
 export interface Message {
   _id: string;

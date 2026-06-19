@@ -15,10 +15,8 @@ module.exports = {
     script: 'bun',
     args: 'run start',
     watch: false,
-    env_production: {
+    env: {
       NODE_ENV: 'production',
-      TEST_ENV: '***SKIP***',
-      PORT: 3000,
     },
     log_date_format: "YYYY-MM-DD HH:mm:ss Z",
   }],

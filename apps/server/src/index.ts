@@ -32,7 +32,7 @@ const corsOpts: CorsOptions = {
 
 app.use(
   cors({
-    origin: true,
+    origin: corsOpts.origin,
     methods: ["GET", "POST", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"],
     credentials: true,
@@ -97,7 +97,7 @@ const server = http.createServer(app);
 
 const io = new SocketIOServer(server, {
   cors: {
-    origin: true,
+    origin: corsOpts.origin,
     methods: ["GET", "POST"],
     credentials: true,
   },
@@ -168,5 +168,7 @@ io.on("connection", (socket) => {
 const port = Number(process.env.PORT || process.env.port || 3000) || 3000;
 
 server.listen(port, () => {
-  console.log(`Server is running on http://localhost:${port}`);
+  console.log('CORS allowed origins:', allowedOrigins, 'set cors', process.env.CORS_ORIGIN)
+  console.log('corsOpt', corsOpts.origin)
+  console.log(`Server is running on http://localhost:${port}`)
 });
