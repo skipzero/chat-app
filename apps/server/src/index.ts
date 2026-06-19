@@ -170,5 +170,5 @@ const port = Number(process.env.PORT || process.env.port || 3000) || 3000;
 server.listen(port, () => {
   console.log('CORS allowed origins:', allowedOrigins, 'set cors', process.env.CORS_ORIGIN)
   console.log('corsOpt', corsOpts.origin)
-  console.log(`Server is running on http://localhost:${port}`)
+  console.log(`Server is running on http://127.0.0.1:${port}`)
 });

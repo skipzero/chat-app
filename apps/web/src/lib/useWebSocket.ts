@@ -20,7 +20,7 @@ type PendingMessage = {
   timestamp: number;
 };
 
-const WS_URL = process.env.NEXT_PUBLIC_SERVER_URL || "http://localhost:3000";
+const WS_URL = process.env.NEXT_PUBLIC_SERVER_URL || "http://127.0.0.1:3000";
 const MAX_RETRY_ATTEMPTS = 5;
 const RETRY_DELAY = 2000; // 2 seconds
 
