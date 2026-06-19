@@ -32,7 +32,7 @@ const corsOpts: CorsOptions = {
 
 app.use(
   cors({
-    origin: corsOpts.origin,
+    origin: true,
     methods: ["GET", "POST", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"],
     credentials: true,
@@ -97,7 +97,7 @@ const server = http.createServer(app);
 
 const io = new SocketIOServer(server, {
   cors: {
-    origin: ['http://localhost:3000', 'http://localhost:3001'],
+    origin: true,
     methods: ["GET", "POST"],
     credentials: true,
   },
