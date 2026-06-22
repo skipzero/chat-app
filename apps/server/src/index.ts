@@ -1,51 +1,40 @@
 import { auth } from "@chatapp/auth";
-// import { env } from "@chatapp/env"
+// import { env } from "@chatapp/env"AaaaaaaqqqaaaaaaaAAAAsassaaaasaSdAAqaassaAA
 import "dotenv/config";
 
 import { toNodeHandler } from "better-auth/node";
-import cors, { type CorsOptions } from "cors";
 import express from "express";
 import http from "http";
 import { Server as SocketIOServer } from "socket.io";
 import { Room, Message } from "@chatapp/db";
 
-
-
-// const { CORS_ORIGIN, PORT } = process.env;
-
 const app = express();
-// app.use(cors())
-const allowedOrigins: string[] = process.env.CORS_ORIGIN ? process.env.CORS_ORIGIN.split(",").map(origin => origin.trim()) : [];
 
-const corsOpts: CorsOptions = {
-  origin: (origin: string | undefined, callback: (err: Error | null, allowed?: boolean) => void) => {
-    if (!origin) return callback(null, true);
 
-    if (allowedOrigins.includes(origin)) {
-      callback(null, true);
-    } else {
-      callback(new Error('Not allowed by CORS'));
-    }
-  },
-  credentials: true,
-}
+/************************************** 
+ * to avoid cors issues we're 
+ * setting nginx to direct to backend 
+ *************************************/
+app.set("trust proxy", 1);
 
-app.use(
-  cors({
-    origin: corsOpts.origin,
-    methods: ["GET", "POST", "OPTIONS"],
-    allowedHeaders: ["Content-Type", "Authorization"],
-    credentials: true,
-  }),
-);
+app.use((_req, res, next) => {
+  res.setHeader('Access-Control-Allow-Credentials', 'true');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, DELETE');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+  next();
+});
 
-app.all("/api/auth{/*path}", toNodeHandler(auth));
+app.use("/api/auth", toNodeHandler(auth));
 app.use(express.json());
 
 app.get("/", (_req, res) => {
-  res.status(200).send("OK");
+  res.status(200).send(_req);
 });
 
+
+/***************************
+ *       API Routes        *
+ **************************/
 app.get("/api/rooms", async (_req, res) => {
   const rooms = await Room.find().sort({ createdAt: -1 }).lean();
 
@@ -95,13 +84,7 @@ app.get("/api/rooms/:roomId/messages", async (req, res) => {
 
 const server = http.createServer(app);
 
-const io = new SocketIOServer(server, {
-  cors: {
-    origin: corsOpts.origin,
-    methods: ["GET", "POST"],
-    credentials: true,
-  },
-});
+const io = new SocketIOServer(server)
 
 io.use((socket, next) => {
   const userId = socket.handshake.auth.userId as string | undefined;
@@ -114,6 +97,10 @@ io.use((socket, next) => {
   next();
 });
 
+
+/******************************* 
+  * Socket.IO event handling *
+*******************************/
 io.on("connection", (socket) => {
   const userId = socket.data.userId as string;
 
@@ -168,7 +155,5 @@ io.on("connection", (socket) => {
 const port = Number(process.env.PORT || process.env.port || 3000) || 3000;
 
 server.listen(port, () => {
-  console.log('CORS allowed origins:', allowedOrigins, 'set cors', process.env.CORS_ORIGIN)
-  console.log('corsOpt', corsOpts.origin)
-  console.log(`Server is running on http://127.0.0.1:${port}`)
+    console.log(`Server is running on http://127.0.0.1:${port}`)
 });

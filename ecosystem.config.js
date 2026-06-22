@@ -7,6 +7,7 @@ module.exports = {
     watch: false,
     env: {
       NODE_ENV: 'production',
+      PORT: 3000,
     },
     log_date_format: "YYYY-MM-DD HH:mm:ss Z",
   },
@@ -18,6 +19,7 @@ module.exports = {
     watch: false,
     env: {
       NODE_ENV: 'production',
+      PORT: 3001,
     },
     log_date_format: "YYYY-MM-DD HH:mm:ss Z",
   }],

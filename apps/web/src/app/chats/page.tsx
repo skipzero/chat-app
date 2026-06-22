@@ -7,7 +7,7 @@ import { Send } from "lucide-react";
 
 import { useWebSocket } from "../../lib/useWebSocket";
 import { getRoomMessages, getRooms, createRoom, type Room } from "../../lib/api";
-import { authClient } from "@/lib/auth-client";
+import { useSession } from "@/lib/auth-client";
 import { Input, Button } from "@/components/ui";
 
 interface ChatMessage {
@@ -21,7 +21,7 @@ interface ChatMessage {
 }
 
 export default function ChatPage() {
-  const { data: session, isPending } = authClient.useSession();
+  const { data: session, isPending } = useSession();
   const userId = session?.user.id || null;
   const senderName = session?.user.name || "Unknown";
   const { messages, setMessages, typingUser, isConnected, joinRoom, sendMessage } = useWebSocket(userId);

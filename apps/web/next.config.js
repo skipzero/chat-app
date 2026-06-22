@@ -1,6 +1,6 @@
-import "@chatapp/env/web";
 const nextConfig = {
     typedRoutes: true,
     reactCompiler: true,
+    poweredByHeader: false,
 };
 export default nextConfig;

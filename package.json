@@ -30,7 +30,6 @@
   "dependencies": {
     "@base-ui/react": "^1.4.1",
     "@chatapp/env": "workspace:*",
-    "@types/cors": "^2.8.19",
     "@types/node": "^25.9.2",
     "better-auth": "^1.6.19",
     "class-variance-authority": "^0.7.1",

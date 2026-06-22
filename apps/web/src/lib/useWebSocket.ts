@@ -20,7 +20,6 @@ type PendingMessage = {
   timestamp: number;
 };
 
-const WS_URL = process.env.NEXT_PUBLIC_SERVER_URL || "http://127.0.0.1:3000";
 const MAX_RETRY_ATTEMPTS = 5;
 const RETRY_DELAY = 2000; // 2 seconds
 
@@ -49,7 +48,7 @@ export function useWebSocket(userId: string | null) {
   const connect = useCallback(() => {
     if (!userId || socketRef.current) return;
 
-    const socket = io(WS_URL, {
+    const socket = io({
       auth: { userId },
       path: "/socket.io",
       withCredentials: true,
