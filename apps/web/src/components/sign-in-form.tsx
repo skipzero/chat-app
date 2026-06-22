@@ -20,6 +20,7 @@ export default function SignInForm({ onSwitchToSignUp }: { onSwitchToSignUp: () 
       password: "",
     },
     onSubmit: async ({ value }) => {
+      console.log("Submitting form with values:", value);
       await signIn.email(
         {
           email: value.email,
