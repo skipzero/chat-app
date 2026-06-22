@@ -1,5 +1,4 @@
 import { auth } from "@chatapp/auth";
-// import { env } from "@chatapp/env"AaaaaaaqqqaaaaaaaAAAAsassaaaasaSdAAqaassaAA
 import "dotenv/config";
 
 import { toNodeHandler } from "better-auth/node";
@@ -21,6 +20,12 @@ app.use((_req, res, next) => {
   res.setHeader('Access-Control-Allow-Credentials', 'true');
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, DELETE');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+  next();
+});
+
+app.use((req, res, next) => {
+  console.log("origin:", req.headers.origin);
+  console.log("host:", req.headers.host);
   next();
 });
 
@@ -155,5 +160,5 @@ io.on("connection", (socket) => {
 const port = Number(process.env.PORT || process.env.port || 3000) || 3000;
 
 server.listen(port, () => {
-    console.log(`Server is running on http://127.0.0.1:${port}`)
+  console.log(`Server is running on http://127.0.0.1:${port}`)
 });
