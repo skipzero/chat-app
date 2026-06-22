@@ -10,6 +10,15 @@ const db = client.db();
 
 export const auth = betterAuth({
   database: mongodbAdapter(db),
+
+  baseURL: { 
+    allowedHosts: [
+      '*zerosquadron.com',
+      '*angerbunny.com',
+    ],
+    fallback: 'https://zerosquadron.com',
+    protocol: process.env.NODE_ENV === "development" ? "http" : "https",
+  },
   emailAndPassword: {
     enabled: true,
   },
