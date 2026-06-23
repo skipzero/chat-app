@@ -24,8 +24,8 @@ app.use((_req, res, next) => {
 });
 
 app.use((req, res, next) => {
-  console.log("origin:", req.headers.origin);
-  console.log("host:", req.headers.host);
+  console.log("+++origin:", req.headers.origin);
+  console.log("---host:", req.headers.host);
   next();
 });
 

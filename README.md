@@ -84,3 +84,36 @@ chatapp/
 - `bun run dev:web`: Start only the web application
 - `bun run dev:server`: Start only the server
 - `bun run check-types`: Check TypeScript types across all apps
+
+
+
+```mermaid
+graph TD
+    subgraph Repo Root [Monorepo Workspace: Turborepo / Bun]
+        subgraph Applications [apps/]
+            WEB[apps/web<br>Next.js Frontend]
+            SRV[apps/server<br>Express API]
+        end
+
+        subgraph Shared Packages [packages/]
+            UI[packages/ui<br>shadcn/ui Design Tokens]
+            AUTH[packages/auth<br>Better-Auth Config]
+            DB[packages/db<br>Mongoose Schemas & Types]
+        end
+    end
+
+    subgraph Infrastructure [External Services]
+        MONGO[(MongoDB Database)]
+    end
+
+    %% Code / Type Dependencies
+    UI -->|Imported Components| WEB
+    AUTH -->|Session Context| WEB
+    AUTH -->|Auth Middleware| SRV
+    DB -->|Injected Types| SRV
+
+    %% Network Traffic
+    Client([User Browser]) -->|HTTP / WebSocket| WEB
+    WEB -->|REST API Requests| SRV
+    SRV -->|Mongoose Queries| MONGO
+```
