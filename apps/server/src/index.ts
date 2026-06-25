@@ -156,9 +156,9 @@ io.on("connection", (socket) => {
     socket.to(roomId).emit("typing", { senderId: userId });
   });
 });
+const devPort = process.env.NODE_ENV === "development" ? 3000 : process.env.PORT;
+// const port = Number(process.env.PORT || process.env.port || 3000) || 3000;
 
-const port = Number(process.env.PORT || process.env.port || 3000) || 3000;
-
-server.listen(port, () => {
-  console.log(`Server is running on http://127.0.0.1:${port}`)
+server.listen(devPort, () => {
+  console.log(`Server is running on http://127.0.0.1:${devPort}, ${process.env.NODE_ENV} mode`);
 });
