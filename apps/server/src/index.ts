@@ -1,6 +1,8 @@
 import { auth } from "@chatapp/auth";
 import "dotenv/config";
 
+import RateLimit from "express-rate-limit";
+
 import { toNodeHandler } from "better-auth/node";
 import express from "express";
 import http from "http";
@@ -23,11 +25,23 @@ app.use((_req, res, next) => {
   next();
 });
 
+// Rate limiting middleware
+const limiter = RateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 100, // limit each IP to 100 requests per windowMs
+  standardHeaders: true, // Return rate limit info in the `RateLimit-*` headers
+  legacyHeaders: false, // Disable the `X-RateLimit-*` headers
+});
+
+app.use(limiter);
+
 app.use((req, res, next) => {
   console.log("+++origin:", req.headers.origin);
   console.log("---host:", req.headers.host);
   next();
 });
+
+
 
 app.use("/api/auth", toNodeHandler(auth));
 app.use(express.json());
