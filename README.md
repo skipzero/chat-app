@@ -1,18 +1,19 @@
 # chatapp
 
-This project was created with [Better-T-Stack](https://github.com/AmanVarshney01/create-better-t-stack), a modern TypeScript stack that combines Next.js, Express, and more.
+A simple real time chat app. I chose to make a chat app to hone my skills using websockets and a chance to get a bit more advanced experience with mongoDB. Among other things, this is also expanding my hands on knowledge of Tanstack, Bun and Shadcn/ui. As well as deeper exploritory useage of Tailwined and Next.js. The list of tech used is below for reference.
 
 ## Features
 
-- **TypeScript** - For type safety and improved developer experience
-- **Next.js** - Full-stack React framework
-- **TailwindCSS** - Utility-first CSS for rapid UI development
-- **Shared UI package** - shadcn/ui primitives live in `packages/ui`
-- **Express** - Fast, unopinionated web framework
-- **Bun** - Runtime environment
-- **Mongoose** - TypeScript-first ORM
-- **MongoDB** - Database engine
-- **Authentication** - Better-Auth
+- **TypeScript** - a strongly typed, open-source, super set of javascript, developed by Microsoft.
+- **Next.js** - an open-source, full-stack framework built on top of React that allows the creation of high-quality, fast, and SEO-friendly web apps.
+- **TailwindCSS** - a utility-first CSS framework designed for rapidly building modern websites/apps.
+- **Shared UI package** - a highly popular, open-source, fully customable collection of reusable React components.
+- **Express** - a minimal, flexible, and open-source backend web application framework for Node.js.
+- **Bun** - an incredibly fast, all-in-one JavaScript/TypeScript runtime, bundler, test runner, and package manager designed as a replacement for Node.js
+- **Mongoose** - an Object Data Modeling (ODM) library for Node.js that manages between data, provides schema validation, and translates objects in your code and in the MongoDB database.
+- **MongoDB** - a popular, open-source, NoSQL (non-relational) document database.
+- **Authentication** - the "better" authentication choice and one of the most highly recommended solutions in the JavaScript ecosystem.
+- **PM2** - a production-grade process manager for Node.js and Bun applications.
 
 ## Getting Started
 
@@ -27,7 +28,7 @@ bun install
 This project uses MongoDB with Mongoose.
 
 1. Make sure you have MongoDB set up.
-2. Update your `apps/server/.env` file with your MongoDB connection URI.
+2. Create your `apps/server/.env` file with your MongoDB connection URI.
 
 Then, run the development server:
 
@@ -81,6 +82,40 @@ chatapp/
 
 - `bun run dev`: Start all applications in development mode
 - `bun run build`: Build all applications
+- `bun run start`: Uses PM2 to start all apps for production
 - `bun run dev:web`: Start only the web application
 - `bun run dev:server`: Start only the server
 - `bun run check-types`: Check TypeScript types across all apps
+
+
+
+```mermaid
+graph TD
+    subgraph Repo Root [Monorepo Workspace: Turborepo / Bun]
+        subgraph Applications [apps/]
+            WEB[apps/web<br>Next.js Frontend]
+            SRV[apps/server<br>Express API]
+        end
+
+        subgraph Shared Packages [packages/]
+            UI[packages/ui<br>shadcn/ui Design Tokens]
+            AUTH[packages/auth<br>Better-Auth Config]
+            DB[packages/db<br>Mongoose Schemas & Types]
+        end
+    end
+
+    subgraph Infrastructure [External Services]
+        MONGO[(MongoDB Database)]
+    end
+
+    %% Code / Type Dependencies
+    UI -->|Imported Components| WEB
+    AUTH -->|Session Context| WEB
+    AUTH -->|Auth Middleware| SRV
+    DB -->|Injected Types| SRV
+
+    %% Network Traffic
+    Client([User Browser]) -->|HTTP / WebSocket| WEB
+    WEB -->|REST API Requests| SRV
+    SRV -->|Mongoose Queries| MONGO
+```

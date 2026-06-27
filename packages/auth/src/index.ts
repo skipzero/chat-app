@@ -15,6 +15,8 @@ export const auth = betterAuth({
     allowedHosts: [
       '*zerosquadron.com',
       '*angerbunny.com',
+      '*localhost',
+      '127.0.0.1',
     ],
     fallback: 'https://zerosquadron.com',
     protocol: process.env.NODE_ENV === "development" ? "http" : "https",
