@@ -29,7 +29,7 @@ export default function SignUpForm({ onSwitchToSignIn }: { onSwitchToSignIn: () 
         },
         {
           onSuccess: () => {
-            router.push("/chats");
+            router.push("/dashboard");
             toast.success("Sign up successful");
           },
           onError: (error) => {
