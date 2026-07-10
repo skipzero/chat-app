@@ -2,7 +2,7 @@
   "extends": "@chatapp/config/tsconfig.base.json",
   "compilerOptions": {
     "composite": true,
-    "types": ["node", "express", "socket.io", "bun-types"],
+    "types": ["node", "express", "socket.io","jest",  "bun-types"],
     "outDir": "dist",
     "paths": {
       "@/*": [

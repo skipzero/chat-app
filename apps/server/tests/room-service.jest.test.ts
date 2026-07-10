@@ -1,4 +1,3 @@
-import { describe, it, expect } from "bun:test";
 import { createSlug, validateRoomInput } from "../src/lib/room-service";
 
 describe("room service (jest)", () => {

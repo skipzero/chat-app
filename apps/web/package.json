@@ -7,8 +7,9 @@
     "dev": "next dev --port 3000",
     "build": "next build",
     "start": "next start --port 3001",
-    "test": "bun test tests/",
+    "test": "bun test tests/lib/utils.test.ts tests/lib/api.test.ts",
     "test:jest": "jest --config jest.config.cjs",
+    "test:all": "bun run test && bun run test:jest",
     "check-types": "tsc -b"
   },
   "dependencies": {
