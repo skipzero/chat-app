@@ -20,7 +20,6 @@ export default function SignInForm({ onSwitchToSignUp }: { onSwitchToSignUp: () 
       password: "",
     },
     onSubmit: async ({ value }) => {
-      console.log("Submitting form with values:", value);
       await signIn.email(
         {
           email: value.email,
@@ -28,7 +27,7 @@ export default function SignInForm({ onSwitchToSignUp }: { onSwitchToSignUp: () 
         },
         {
           onSuccess: () => {
-            router.push("/dashboard");
+            router.push("/chats");
             toast.success("Sign in successful");
           },
           onError: (error) => {

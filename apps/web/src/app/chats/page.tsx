@@ -9,6 +9,8 @@ import { useWebSocket } from "../../lib/useWebSocket";
 import { getRoomMessages, getRooms, createRoom, type Room } from "../../lib/api";
 import { useSession } from "@/lib/auth-client";
 import { Input, Button } from "@/components/ui";
+import { Textarea } from "@chatapp/ui/components/textarea"
+
 
 interface ChatMessage {
   _id: string;
@@ -195,7 +197,7 @@ export default function ChatPage() {
             messages.map((message) => (
               <div
                 key={message._id}
-                className={`rounded-2xl px-4 py-3 ${message.senderId === userId ? "bg-primary/10 ml-auto text-right me" : "bg-secondary/10 mr-auto text-left others"}`}
+                className={`rounded-2xl px-4 py-3 w-3/5 text-gray-400 ${message.senderId === userId ? "bg-primary/10 ml-auto text-right " : "bg-secondary/10 mr-auto text-left others"}`}
               >
                 <div className="text-xs text-muted-foreground mb-1">{message.senderId === userId ? senderName : message.senderName}</div>
                 <div>{message.content}</div>
@@ -209,9 +211,9 @@ export default function ChatPage() {
         <div className="mt-2 min-h-[1.5rem] text-sm text-muted-foreground">{typingUser ? `${typingUser} is typing...` : ""}</div>
 
         <form onSubmit={handleSubmit} className="mt-4 flex items-center gap-2">
-          <Input
+          <Textarea
             value={input}
-            onChange={(event: ChangeEvent<HTMLInputElement>) => setInput(event.target.value)}
+            onChange={(event: ChangeEvent<HTMLTextAreaElement>) => setInput(event.target.value)}
             placeholder={activeRoom ? "Type a message..." : "Select a room first"}
             className="flex-1"
             disabled={!activeRoom}

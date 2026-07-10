@@ -24,6 +24,9 @@
     "dev": "NODE_ENV=development bun run --filter '*' dev",
     "build": "NODE_ENV=production bun run --filter '*' build",
     "check-types": "bun run --filter '*' check-types",
+    "test": "bun run --filter '*' test",
+    "test:jest": "bun run --filter '*' test:jest",
+    "test:all": "bun run test:jest && bun run test",
     "dev:web": "bun run --filter web dev",
     "dev:server": "bun run --filter server dev"
   },
@@ -38,6 +41,7 @@
     "express-rate-limit": "^8.5.2",
     "mongodb": "^6.20.0",
     "next": "^16.2.7",
+    "shadcn": "^4.13.0",
     "tailwind-merge": "^3.5.0",
     "zod": "^4.4.1"
   },

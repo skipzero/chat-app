@@ -35,9 +35,9 @@ const limiter = RateLimit({
 
 app.use(limiter);
 
-app.use((req, res, next) => {
-  console.log("+++origin:", req.headers.origin);
-  console.log("---host:", req.headers.host);
+app.use((req, _res, next) => {
+  console.log("origin:", req.headers.origin);
+  console.log("host:", req.headers.host);
   next();
 });
 

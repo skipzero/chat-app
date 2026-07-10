@@ -89,6 +89,8 @@ chatapp/
 
 
 
+<details>
+<summary>Click to view/hide diagram</summary>
 ```mermaid
 graph TD
     subgraph Repo Root [Monorepo Workspace: Turborepo / Bun]
@@ -119,3 +121,4 @@ graph TD
     WEB -->|REST API Requests| SRV
     SRV -->|Mongoose Queries| MONGO
 ```
+</details>
