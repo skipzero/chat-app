@@ -107,12 +107,7 @@ const io = new SocketIOServer(server, {
   cors: {
     origin: process.env.NODE_ENV === "development"
       ? ["http://localhost:3000"]
-      : [
-          "https://zerosquadron.com",
-          "https://www.zerosquadron.com",
-          "https://angerbunny.com",
-          "https://www.angerbunny.com",
-        ],
+      : true,
     credentials: true,
   },
 })
