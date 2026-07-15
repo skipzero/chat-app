@@ -3,7 +3,9 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { io, type Socket } from "socket.io-client";
 
-const SOCKET_URL = `http://localhost:3001`;
+const SOCKET_URL = process.env.NODE_ENV === "production"
+  ? undefined
+  : "http://localhost:3001";
 
 type ChatMessage = {
   _id: string;
