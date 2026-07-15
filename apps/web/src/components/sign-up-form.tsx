@@ -74,6 +74,7 @@ export default function SignUpForm({ onSwitchToSignIn }: { onSwitchToSignIn: () 
                   value={field.state.value}
                   onBlur={field.handleBlur}
                   onChange={(e) => field.handleChange(e.target.value)}
+                  autoComplete="name"
                 />
                 {field.state.meta.errors.map((error) => (
                   <p key={error?.message} className="text-red-500">
@@ -97,6 +98,7 @@ export default function SignUpForm({ onSwitchToSignIn }: { onSwitchToSignIn: () 
                   value={field.state.value}
                   onBlur={field.handleBlur}
                   onChange={(e) => field.handleChange(e.target.value)}
+                  autoComplete="email"
                 />
                 {field.state.meta.errors.map((error) => (
                   <p key={error?.message} className="text-red-500">
@@ -120,6 +122,7 @@ export default function SignUpForm({ onSwitchToSignIn }: { onSwitchToSignIn: () 
                   value={field.state.value}
                   onBlur={field.handleBlur}
                   onChange={(e) => field.handleChange(e.target.value)}
+                  autoComplete="password"
                 />
                 {field.state.meta.errors.map((error) => (
                   <p key={error?.message} className="text-red-500">

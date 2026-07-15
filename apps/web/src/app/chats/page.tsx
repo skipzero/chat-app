@@ -119,15 +119,14 @@ export default function ChatPage() {
       {isSidebarOpen ? (
         <aside className="flex-shrink-0 w-[240px] flex flex-col gap-4 rounded-lg border border-border p-4 bg-panel">
           <div>
-            <div className="flex items-center justify-between gap-3">
-              <div>
-                <h2 className="text-lg font-semibold">Rooms</h2>
-                <p className="text-sm text-muted-foreground">Join a room to chat live.</p>
-              </div>
-              <span className={`text-xs font-medium ${isConnected ? "text-emerald-600" : "text-rose-600"}`}>
+              <div className="width-full">
+                <h2 className="text-lg font-semibold float-left text-left">Rooms</h2>
+              <span className={`text-xs font-medium ${isConnected ? "text-emerald-600" : "text-rose-600"} float-right text-right mt-2`}>
                 {isConnected ? "Connected" : "Offline"}
               </span>
-            </div>
+              <div className="clear-both"></div>
+                <p className="text-sm text-muted-foreground width-full mt-4 mb-6">Join a room to chat live.</p>
+              </div>
 
             <div className="space-y-2 overflow-y-auto">
               {isLoading && <div className="text-sm text-muted-foreground">Loading rooms…</div>}
@@ -167,8 +166,8 @@ export default function ChatPage() {
                   className="w-full"
                 />
               </div>
-              <Button type="submit" className="w-full">
-                Create room
+              <Button type="submit" className="w-full font-extrabold">
+                Create Room
               </Button>
             </form>
           </div>
@@ -197,11 +196,12 @@ export default function ChatPage() {
             messages.map((message) => (
               <div
                 key={message._id}
-                className={`rounded-2xl px-4 py-3 w-3/5 text-gray-400 ${message.senderId === userId ? "bg-primary/10 ml-auto text-right " : "bg-secondary/10 mr-auto text-left others"}`}
+                className={`rounded-2xl px-4 py-3 w-3/5 text-white-800 ${message.senderId === userId ? "bg-slate-600 ml-auto text-right " : "bg-gray-800 mr-auto text-left others"}`}
               >
-                <div className="text-xs text-muted-foreground mb-1">{message.senderId === userId ? senderName : message.senderName}</div>
+                <div className="text-xs text-gray-400 font-semibold mb-1">{message.senderId === userId ? senderName : message.senderName}</div>
                 <div>{message.content}</div>
                 <div className="mt-1 text-[11px] text-muted-foreground">{new Date(message.createdAt).toLocaleTimeString()}</div>
+                <div>{Object.keys(message).join(' ')}</div>
               </div>
             ))
           )}

@@ -103,7 +103,14 @@ app.get("/api/rooms/:roomId/messages", async (req, res) => {
 
 const server = http.createServer(app);
 
-const io = new SocketIOServer(server)
+const io = new SocketIOServer(server, {
+  cors: {
+    origin: process.env.NODE_ENV === "development"
+      ? ["http://localhost:3000"]
+      : ["https://zerosquadron.com", "https://angerbunny.com"],
+    credentials: true,
+  },
+})
 
 io.use((socket, next) => {
   const userId = socket.handshake.auth.userId as string | undefined;
@@ -170,9 +177,9 @@ io.on("connection", (socket) => {
     socket.to(roomId).emit("typing", { senderId: userId });
   });
 });
-const devPort = process.env.NODE_ENV === "development" ? 3000 : process.env.PORT;
-// const port = Number(process.env.PORT || process.env.port || 3000) || 3000;
+const requestedPort = Number(process.env.PORT || process.env.SERVER_PORT || 3001);
+const port = Number.isFinite(requestedPort) && requestedPort > 0 ? requestedPort : 3001;
 
-server.listen(devPort, () => {
-  console.log(`Server is running on http://127.0.0.1:${devPort}, ${process.env.NODE_ENV} mode`);
+server.listen(port, () => {
+  console.log(`Server is running on http://127.0.0.1:${port}, ${process.env.NODE_ENV || "development"} mode`);
 });

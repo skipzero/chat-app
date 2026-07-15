@@ -3,6 +3,8 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { io, type Socket } from "socket.io-client";
 
+const SOCKET_URL = `http://localhost:3001`;
+
 type ChatMessage = {
   _id: string;
   roomId: string;
@@ -48,9 +50,9 @@ export function useWebSocket(userId: string | null) {
   const connect = useCallback(() => {
     if (!userId || socketRef.current) return;
 
-    const socket = io({
+    const socket = io(SOCKET_URL, {
       auth: { userId },
-      path: "/socket.io",
+      transports: ["websocket", "polling"],
       withCredentials: true,
       reconnection: true,
       reconnectionDelay: RETRY_DELAY,

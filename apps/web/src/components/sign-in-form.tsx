@@ -72,6 +72,7 @@ export default function SignInForm({ onSwitchToSignUp }: { onSwitchToSignUp: () 
                   value={field.state.value}
                   onBlur={field.handleBlur}
                   onChange={(e) => field.handleChange(e.target.value)}
+                  autoComplete="email"
                 />
                 {field.state.meta.errors.map((error) => (
                   <p key={error?.message} className="text-red-500">
@@ -95,6 +96,7 @@ export default function SignInForm({ onSwitchToSignUp }: { onSwitchToSignUp: () 
                   value={field.state.value}
                   onBlur={field.handleBlur}
                   onChange={(e) => field.handleChange(e.target.value)}
+                  autoComplete="current-password"
                 />
                 {field.state.meta.errors.map((error) => (
                   <p key={error?.message} className="text-red-500">

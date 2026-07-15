@@ -15,8 +15,10 @@ export const auth = betterAuth({
     allowedHosts: [
       '*zerosquadron.com',
       '*angerbunny.com',
-      '*localhost',
-      '127.0.0.1',
+      'localhost:3000',
+      'localhost:3001',
+      '127.0.0.1:3000',
+      '127.0.0.1:3001',
     ],
     fallback: 'https://zerosquadron.com',
     protocol: process.env.NODE_ENV === "development" ? "http" : "https",
@@ -26,8 +28,8 @@ export const auth = betterAuth({
   },
   advanced: {
     defaultCookieAttributes: {
-      sameSite: "none",
-      secure: true,
+      sameSite: "lax",
+      secure: false,
       httpOnly: true,
     },
     rateLimit: {
