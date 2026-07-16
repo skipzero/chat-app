@@ -211,7 +211,6 @@ export default function ChatPage() {
                 <div className="text-xs text-gray-400 font-semibold mb-1">{message.senderId === userId ? senderName : message.senderName}</div>
                 <div>{message.content}</div>
                 <div className="mt-1 text-[11px] text-muted-foreground">{new Date(message.createdAt).toLocaleTimeString()}</div>
-                <div>{Object.keys(message).join(' ')}</div>
               </div>
             ))
           )}
