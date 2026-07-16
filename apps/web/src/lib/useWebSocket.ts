@@ -80,10 +80,10 @@ export function useWebSocket(userId: string | null) {
       setMessages((prev) => [...prev, message]);
     });
 
-    socket.on("typing", ({ senderId }: { senderId: string }) => {
-      console.log("User is typing:", senderId);
-      setTypingUser(senderId);
-      setTimeout(() => setTypingUser(null), 3000);
+    socket.on("typing", ({ senderName }: { senderName: string }) => {
+      console.log("User is typing:", senderName);
+      setTypingUser(senderName);
+      setTimeout(() => setTypingUser(null), 5000);
     });
 
     socket.on("connect_error", (error) => {
@@ -156,10 +156,10 @@ export function useWebSocket(userId: string | null) {
   );
 
   const sendTyping = useCallback(
-    (roomId: string) => {
+    (roomId: string, senderName: string) => {
       if (!userId || !socketRef.current || !roomId) return;
       console.log("Sending typing notification:", { roomId });
-      socketRef.current.emit("typing", { roomId });
+      socketRef.current.emit("typing", { roomId, senderName });
     },
     [userId],
   );

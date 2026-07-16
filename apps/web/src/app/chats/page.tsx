@@ -1,8 +1,6 @@
 "use client";
 
-import "./chat.css";
-
-import { useEffect, useRef, useState, type ChangeEvent, type SubmitEvent } from "react";
+import { useEffect, useRef, useState, useCallback, type ChangeEvent, type SubmitEvent } from "react";
 import { Send } from "lucide-react";
 
 import { useWebSocket } from "../../lib/useWebSocket";
@@ -26,7 +24,7 @@ export default function ChatPage() {
   const { data: session, isPending } = useSession();
   const userId = session?.user.id || null;
   const senderName = session?.user.name || "Unknown";
-  const { messages, setMessages, typingUser, isConnected, joinRoom, sendMessage } = useWebSocket(userId);
+  const { messages, setMessages, typingUser, isConnected, joinRoom, sendMessage, sendTyping } = useWebSocket(userId);
   const [rooms, setRooms] = useState<Room[]>([]);
   const [activeRoomId, setActiveRoomId] = useState<string | null>(null);
   const [activeRoom, setActiveRoom] = useState<Room | null>(null);
@@ -93,6 +91,18 @@ export default function ChatPage() {
       setError(err instanceof Error ? err.message : "Failed to create room.");
     }
   };
+
+  const typingTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const handleTyping = useCallback(() => {
+    if (!activeRoomId) return;
+    sendTyping(activeRoomId, senderName);
+  }, [activeRoomId, senderName, sendTyping]);
+
+  const handleInputChange = useCallback((event: ChangeEvent<HTMLInputElement>) => {
+    setInput(event.target.value);
+    handleTyping();
+  }, [handleTyping]);
 
   const handleSubmit = (event: SubmitEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -208,12 +218,12 @@ export default function ChatPage() {
           <div ref={messagesEndRef} />
         </div>
 
-        <div className="mt-2 min-h-[1.5rem] text-sm text-muted-foreground">{typingUser ? `${typingUser} is typing...` : ""}</div>
+        <div className="mt-2 min-h-[1.5rem] text-sm text-muted-foreground">{typingUser ? `${typingUser} is typing...` : " "}</div>
 
         <form onSubmit={handleSubmit} className="mt-4 flex items-center gap-2">
-          <Textarea
+          <Input
             value={input}
-            onChange={(event: ChangeEvent<HTMLTextAreaElement>) => setInput(event.target.value)}
+            onChange={handleInputChange}
             placeholder={activeRoom ? "Type a message..." : "Select a room first"}
             className="flex-1"
             disabled={!activeRoom}

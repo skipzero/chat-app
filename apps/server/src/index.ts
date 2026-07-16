@@ -172,9 +172,9 @@ io.on("connection", (socket) => {
     }
   });
 
-  socket.on("typing", ({ roomId }: { roomId: string }) => {
+  socket.on("typing", ({ roomId, senderName }: { roomId: string; senderName: string }) => {
     if (!roomId) return;
-    socket.to(roomId).emit("typing", { senderId: userId });
+    socket.to(roomId).emit("typing", { senderName });
   });
 });
 const requestedPort = Number(process.env.PORT || process.env.SERVER_PORT || 3001);
