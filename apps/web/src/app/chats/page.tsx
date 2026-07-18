@@ -206,9 +206,8 @@ export default function ChatPage() {
             messages.map((message) => (
               <div
                 key={message._id}
-                className={`rounded-2xl px-4 py-3 w-3/5 text-white-800 ${message.senderId === userId ? "bg-slate-600 ml-auto text-right " : "bg-gray-800 mr-auto text-left others"}`}
-              >
-                <div className="text-xs text-gray-400 font-semibold mb-1">{message.senderId === userId ? senderName : message.senderName}</div>
+                className={`rounded-2xl px-4 py-3 w-3/5 ${message.senderId === userId ? "bg-primary/10 ml-auto text-right me" : "bg-secondary/10 mr-auto text-left others"}`}>
+                <div className="text-xs text-muted-foreground font-semibold mb-1">{message.senderId === userId ? senderName : message.senderName}</div>
                 <div>{message.content}</div>
                 <div className="mt-1 text-[11px] text-muted-foreground">{new Date(message.createdAt).toLocaleTimeString()}</div>
               </div>
