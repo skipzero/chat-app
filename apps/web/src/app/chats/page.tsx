@@ -7,7 +7,6 @@ import { useWebSocket } from "../../lib/useWebSocket";
 import { getRoomMessages, getRooms, createRoom, type Room } from "../../lib/api";
 import { useSession } from "@/lib/auth-client";
 import { Input, Button } from "@/components/ui";
-import { Textarea } from "@chatapp/ui/components/textarea"
 
 
 interface ChatMessage {
@@ -206,7 +205,7 @@ export default function ChatPage() {
             messages.map((message) => (
               <div
                 key={message._id}
-                className={`rounded-2xl px-4 py-3 w-3/5 ${message.senderId === userId ? "bg-primary/10 ml-auto text-right me" : "bg-secondary/10 mr-auto text-left others"}`}>
+                className={`rounded-2xl px-4 py-3 w-3/5 ${message.senderId === userId ? "bg-card ml-auto text-right me" : "bg-card/10 mr-auto text-left others"}`}>
                 <div className="text-xs text-muted-foreground font-semibold mb-1">{message.senderId === userId ? senderName : message.senderName}</div>
                 <div>{message.content}</div>
                 <div className="mt-1 text-[11px] text-muted-foreground">{new Date(message.createdAt).toLocaleTimeString()}</div>
