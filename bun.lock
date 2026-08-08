@@ -137,6 +137,26 @@
         "typescript": "^5",
       },
     },
+    "packages/forms": {
+      "name": "@chatapp/forms",
+      "version": "0.0.0",
+      "dependencies": {
+        "@chatapp/ui": "workspace:*",
+        "@tanstack/react-form": "^1.28.0",
+      },
+      "devDependencies": {
+        "@chatapp/config": "workspace:*",
+        "@types/react": "19.2.16",
+        "@types/react-dom": "19.2.3",
+        "react": "19.2.7",
+        "react-dom": "19.2.7",
+        "typescript": "^5.9.3",
+      },
+      "peerDependencies": {
+        "react": "^19.0.0",
+        "react-dom": "^19.0.0",
+      },
+    },
     "packages/ui": {
       "name": "@chatapp/ui",
       "version": "0.0.0",
@@ -303,6 +323,8 @@
     "@chatapp/db": ["@chatapp/db@workspace:packages/db"],
 
     "@chatapp/env": ["@chatapp/env@workspace:packages/env"],
+
+    "@chatapp/forms": ["@chatapp/forms@workspace:packages/forms"],
 
     "@chatapp/ui": ["@chatapp/ui@workspace:packages/ui"],
 
