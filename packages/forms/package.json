@@ -1,0 +1,30 @@
+{
+  "name": "@chatapp/forms",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts",
+    "./lib/*": "./src/lib/*.ts",
+    "./components/*": "./src/components/*.tsx"
+  },
+  "scripts": {
+    "check-types": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@chatapp/ui": "workspace:*",
+    "@tanstack/react-form": "^1.28.0"
+  },
+  "devDependencies": {
+    "@chatapp/config": "workspace:*",
+    "@types/react": "19.2.16",
+    "@types/react-dom": "19.2.3",
+    "react": "19.2.7",
+    "react-dom": "19.2.7",
+    "typescript": "^5.9.3"
+  },
+  "peerDependencies": {
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  }
+}
