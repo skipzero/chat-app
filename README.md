@@ -89,8 +89,6 @@ chatapp/
 
 
 
-<details>
-<summary>Click to view/hide diagram</summary>
 ```mermaid
 graph TD
     subgraph Repo Root [Monorepo Workspace: Turborepo / Bun]
@@ -101,6 +99,7 @@ graph TD
 
         subgraph Shared Packages [packages/]
             UI[packages/ui<br>shadcn/ui Design Tokens]
+            FORMS[packages/forms<br>TanStack Form Components]
             AUTH[packages/auth<br>Better-Auth Config]
             DB[packages/db<br>Mongoose Schemas & Types]
         end
@@ -112,6 +111,8 @@ graph TD
 
     %% Code / Type Dependencies
     UI -->|Imported Components| WEB
+    FORMS -->|Imported Components| WEB
+    FORMS -->|Builds on| UI
     AUTH -->|Session Context| WEB
     AUTH -->|Auth Middleware| SRV
     DB -->|Injected Types| SRV
@@ -121,4 +122,3 @@ graph TD
     WEB -->|REST API Requests| SRV
     SRV -->|Mongoose Queries| MONGO
 ```
-</details>
